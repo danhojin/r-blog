@@ -1,0 +1,24 @@
+---
+title: Eng title
+author: ''
+date: '2020-10-24'
+slug: eng-title
+categories: []
+tags: []
+---
+
+# Ex
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+
+
+```{r}
+mtcars %>%
+  mutate(cyl = factor(cyl)) %>%
+  ggplot(aes(x = disp, y = mpg, color = cyl)) +
+  geom_point()
+```
+

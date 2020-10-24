@@ -1,0 +1,22 @@
+---
+title: Eng title
+author: ''
+date: '2020-10-24'
+slug: eng-title
+categories: []
+tags: []
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="ex" class="section level1">
+<h1>Ex</h1>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre class="r"><code>mtcars %&gt;%
+  mutate(cyl = factor(cyl)) %&gt;%
+  ggplot(aes(x = disp, y = mpg, color = cyl)) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
