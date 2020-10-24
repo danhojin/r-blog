@@ -1,0 +1,37 @@
+---
+title: 경제
+author: ''
+date: '2020-10-24'
+slug: 경제
+categories: []
+tags: []
+---
+
+
+# 한글 처리는?
+
+
+```{r, message=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(wooldridge)
+
+data("lawsch85")
+df <- lawsch85
+
+df %>%
+  select(salary, LSAT, GPA, libvol, cost, rank) %>%
+  pivot_longer(-salary) %>%
+  ggplot(aes(x = value, y = salary, color = name)) +
+  geom_point() +
+  facet_wrap(~ name, ncol = 2, scales = "free")
+```
+
+```{r}
+library(knitr)
+lm_mod <- linear_reg() %>%
+  set_engine("lm")
+lm_fit <- fit(lm_mod, log(salary) ~ LSAT + GPA + log(libvol) + log(cost) + rank, data = df)
+tidy(lm_fit) %>% kable()
+```
+

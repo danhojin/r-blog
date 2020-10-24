@@ -1,0 +1,91 @@
+---
+title: 경제
+author: ''
+date: '2020-10-24'
+slug: 경제
+categories: []
+tags: []
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="한글-처리는" class="section level1">
+<h1>한글 처리는?</h1>
+<pre class="r"><code>library(tidyverse)
+library(tidymodels)
+library(wooldridge)
+
+data(&quot;lawsch85&quot;)
+df &lt;- lawsch85
+
+df %&gt;%
+  select(salary, LSAT, GPA, libvol, cost, rank) %&gt;%
+  pivot_longer(-salary) %&gt;%
+  ggplot(aes(x = value, y = salary, color = name)) +
+  geom_point() +
+  facet_wrap(~ name, ncol = 2, scales = &quot;free&quot;)</code></pre>
+<pre><code>## Warning: Removed 58 rows containing missing values (geom_point).</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>library(knitr)
+lm_mod &lt;- linear_reg() %&gt;%
+  set_engine(&quot;lm&quot;)
+lm_fit &lt;- fit(lm_mod, log(salary) ~ LSAT + GPA + log(libvol) + log(cost) + rank, data = df)
+tidy(lm_fit) %&gt;% kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">8.3432262</td>
+<td align="right">0.5325192</td>
+<td align="right">15.667464</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">LSAT</td>
+<td align="right">0.0046965</td>
+<td align="right">0.0040105</td>
+<td align="right">1.171045</td>
+<td align="right">0.2437229</td>
+</tr>
+<tr class="odd">
+<td align="left">GPA</td>
+<td align="right">0.2475238</td>
+<td align="right">0.0900371</td>
+<td align="right">2.749133</td>
+<td align="right">0.0068262</td>
+</tr>
+<tr class="even">
+<td align="left">log(libvol)</td>
+<td align="right">0.0949932</td>
+<td align="right">0.0332544</td>
+<td align="right">2.856565</td>
+<td align="right">0.0049877</td>
+</tr>
+<tr class="odd">
+<td align="left">log(cost)</td>
+<td align="right">0.0375539</td>
+<td align="right">0.0321061</td>
+<td align="right">1.169682</td>
+<td align="right">0.2442689</td>
+</tr>
+<tr class="even">
+<td align="left">rank</td>
+<td align="right">-0.0033246</td>
+<td align="right">0.0003485</td>
+<td align="right">-9.540787</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+</div>

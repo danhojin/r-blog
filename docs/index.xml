@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>경제</title>
+      <link>https://danhojin.github.io/r-blog/2020/10/24/%EA%B2%BD%EC%A0%9C/</link>
+      <pubDate>Sat, 24 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/10/24/%EA%B2%BD%EC%A0%9C/</guid>
+      <description>한글 처리는? library(tidyverse) library(tidymodels) library(wooldridge) data(&amp;quot;lawsch85&amp;quot;) df &amp;lt;- lawsch85 df %&amp;gt;% select(salary, LSAT, GPA, libvol, cost, rank) %&amp;gt;% pivot_longer(-salary) %&amp;gt;% ggplot(aes(x = value, y = salary, color = name)) + geom_point() + facet_wrap(~ name, ncol = 2, scales = &amp;quot;free&amp;quot;) ## Warning: Removed 58 rows containing missing values (geom_point). library(knitr) lm_mod &amp;lt;- linear_reg() %&amp;gt;% set_engine(&amp;quot;lm&amp;quot;) lm_fit &amp;lt;- fit(lm_mod, log(salary) ~ LSAT + GPA + log(libvol) + log(cost) + rank, data = df) tidy(lm_fit) %&amp;gt;% kable()   term estimate std.</description>
+    </item>
+    
+    <item>
       <title>A Plain Markdown Post</title>
       <link>https://danhojin.github.io/r-blog/2016/12/30/a-plain-markdown-post/</link>
       <pubDate>Fri, 30 Dec 2016 21:49:57 -0700</pubDate>
