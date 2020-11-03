@@ -332,7 +332,7 @@ tidy(F_fit) %&gt;%
 <p><span class="math inline">\(\frac{SSR_R - SSR_F}{ SSR_F } \approx \frac{df_R - df_F}{df_F}\)</span></p>
 <p>모델 편향이 너무 커져서 자유도의 이득 <span class="math inline">\(df_R - df_F\)</span> 보다 잔차 제곱합이 커지게 되면 다음 부등호가 성립된다.</p>
 <p><span class="math inline">\(\frac{SSR_R - SSR_F}{ SSR_F } &gt; \frac{df_R - df_F}{df_F}\)</span></p>
-<p>자유도는 특징 변수의 축소는 <span class="math inline">\(\Delta df = df_R - df_F\)</span> 자유도의 차이이다. 이를 이용하면 다음 F비가 정의된다.</p>
+<p>자유도는 특징 변수 차에서 <span class="math inline">\(\Delta df = df_R - df_F\)</span> 얻는다. 이를 이용하면 다음 F비가 정의된다.</p>
 <p><span class="math inline">\(F_{\Delta df, \; df_F} = \frac{(SSR_R - SSR_F) / \Delta df}{ SSR_F / df_F}\)</span></p>
 <p>F분포에서 사전에 정한 임계치 이내인 경우 줄이고자 하는 특징 변수의 효과가 없다는 영가설을 채택한다. 즉, 변수 제거를 진행할 수 있다. 이전 예제와 같이 임계치를 벗어난 경우 특징 변수 모두가 효과가 없다고 볼 수 없다.</p>
 <div id="f-검정-개념의-확장" class="section level2">
@@ -349,7 +349,7 @@ tidy(F_fit) %&gt;%
 </div>
 <div id="맺으며" class="section level1">
 <h1>맺으며</h1>
-<p>선형 다중 회귀에서 변수 결정에 유용하게 쓸 수 있는 F-검정을 살펴보았다. 이 논의에서 얻을 수 있는 잔차 합과 자유도의 관계가 모형 비교 기준을 만드는데 어떻게 쓰였는지 lasso에 어떻게 확장되었는지 확인해 보았다. lasso는 변수 결정에 매우 중요한 방법이므로 차후에 다시 살펴보도록 하겠다.</p>
+<p>선형 다중 회귀에서 변수 결정에 유용하게 쓸 수 있는 F-검정을 살펴보았다. 이 논의에서 얻을 수 있는 잔차 합과 자유도의 관계가 모형 비교 기준 AIC등을 만드는데 어떻게 쓰였는지 lasso로 어떻게 확장되었는지 확인해 보았다. lasso는 변수 결정에 매우 중요한 방법이므로 차후에 다시 살펴보도록 하겠다.</p>
 </div>
 <div id="참고" class="section level1">
 <h1>참고</h1>
