@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reduced model on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/reduced-model/</link>
+    <description>Recent content in reduced model on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Wed, 28 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/reduced-model/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>선형회귀분석에서 모형 평가를 위한 F-검정</title>
+      <link>https://danhojin.github.io/r-blog/2020/10/28/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D-%EB%AA%A8%ED%98%95%ED%8F%89%EA%B0%80-f%EA%B2%80%EC%A0%95/</link>
+      <pubDate>Wed, 28 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/10/28/%EC%84%A0%ED%98%95%ED%9A%8C%EA%B7%80%EB%B6%84%EC%84%9D-%EB%AA%A8%ED%98%95%ED%8F%89%EA%B0%80-f%EA%B2%80%EC%A0%95/</guid>
+      <description>library(tidyverse) library(tidymodels) library(wooldridge) library(GGally) data(&amp;quot;mlb1&amp;quot;) df &amp;lt;- mlb1 df %&amp;gt;% select(salary, years, gamesyr, bavg, hrunsyr, rbisyr) %&amp;gt;% ggpairs() mod.lm &amp;lt;- linear_reg() %&amp;gt;% set_engine(&amp;quot;lm&amp;quot;) fit.lm.f &amp;lt;- fit(mod.lm, log(salary) ~ years + gamesyr + bavg + hrunsyr + rbisyr, data = df) fit.lm.r &amp;lt;- fit(mod.lm, log(salary) ~ years + gamesyr, data = df) tidy(fit.lm.f) ## # A tibble: 6 x 5 ## term estimate std.error statistic p.value ## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 (Intercept) 11.</description>
+    </item>
+    
+  </channel>
+</rss>

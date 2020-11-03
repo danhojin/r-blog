@@ -4,27 +4,62 @@
   
   <url>
     <loc>https://danhojin.github.io/r-blog/</loc>
-    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://danhojin.github.io/r-blog/2020/10/24/eng-title/</loc>
-    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+    <loc>https://danhojin.github.io/r-blog/tags/aic/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/bic/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/f-test/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/lasso/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/linear-regression/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/lm/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/model-selection/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://danhojin.github.io/r-blog/post/</loc>
-    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://danhojin.github.io/r-blog/2020/10/24/%EA%B2%BD%EC%A0%9C/</loc>
-    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+    <loc>https://danhojin.github.io/r-blog/tags/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://danhojin.github.io/r-blog/2016/12/30/a-plain-markdown-post/</loc>
-    <lastmod>2016-12-30T21:49:57-07:00</lastmod>
+    <loc>https://danhojin.github.io/r-blog/tags/tidymodels/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</loc>
+    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -33,16 +68,7 @@
   </url>
   
   <url>
-    <loc>https://danhojin.github.io/r-blog/2015/01/01/lorem-ipsum/</loc>
-    <lastmod>2015-01-01T13:09:13-06:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://danhojin.github.io/r-blog/categories/</loc>
-  </url>
-  
-  <url>
-    <loc>https://danhojin.github.io/r-blog/tags/</loc>
   </url>
   
 </urlset>

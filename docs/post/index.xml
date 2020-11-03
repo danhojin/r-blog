@@ -6,42 +6,14 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Sat, 24 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Eng title</title>
-      <link>https://danhojin.github.io/r-blog/2020/10/24/eng-title/</link>
-      <pubDate>Sat, 24 Oct 2020 00:00:00 +0000</pubDate>
+      <title>선형 회귀 모형의 변수 선택: F-검정</title>
+      <link>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://danhojin.github.io/r-blog/2020/10/24/eng-title/</guid>
-      <description>  Ex library(tidyverse) mtcars %&amp;gt;% mutate(cyl = factor(cyl)) %&amp;gt;% ggplot(aes(x = disp, y = mpg, color = cyl)) + geom_point()  </description>
-    </item>
-    
-    <item>
-      <title>경제</title>
-      <link>https://danhojin.github.io/r-blog/2020/10/24/%EA%B2%BD%EC%A0%9C/</link>
-      <pubDate>Sat, 24 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://danhojin.github.io/r-blog/2020/10/24/%EA%B2%BD%EC%A0%9C/</guid>
-      <description>한글 처리는? library(tidyverse) library(tidymodels) library(wooldridge) data(&amp;quot;lawsch85&amp;quot;) df &amp;lt;- lawsch85 df %&amp;gt;% select(salary, LSAT, GPA, libvol, cost, rank) %&amp;gt;% pivot_longer(-salary) %&amp;gt;% ggplot(aes(x = value, y = salary, color = name)) + geom_point() + facet_wrap(~ name, ncol = 2, scales = &amp;quot;free&amp;quot;) ## Warning: Removed 58 rows containing missing values (geom_point). library(knitr) lm_mod &amp;lt;- linear_reg() %&amp;gt;% set_engine(&amp;quot;lm&amp;quot;) lm_fit &amp;lt;- fit(lm_mod, log(salary) ~ LSAT + GPA + log(libvol) + log(cost) + rank, data = df) tidy(lm_fit) %&amp;gt;% kable()   term estimate std.</description>
-    </item>
-    
-    <item>
-      <title>A Plain Markdown Post</title>
-      <link>https://danhojin.github.io/r-blog/2016/12/30/a-plain-markdown-post/</link>
-      <pubDate>Fri, 30 Dec 2016 21:49:57 -0700</pubDate>
-      
-      <guid>https://danhojin.github.io/r-blog/2016/12/30/a-plain-markdown-post/</guid>
-      <description>This is a post written in plain Markdown (*.md) instead of R Markdown (*.Rmd). The major differences are:
- You cannot run any R code in a plain Markdown document, whereas in an R Markdown document, you can embed R code chunks (```{r}); A plain Markdown post is rendered through Blackfriday, and an R Markdown document is compiled by rmarkdown and Pandoc.  There are many differences in syntax between Blackfriday&amp;rsquo;s Markdown and Pandoc&amp;rsquo;s Markdown.</description>
-    </item>
-    
-    <item>
-      <title>Lorem Ipsum</title>
-      <link>https://danhojin.github.io/r-blog/2015/01/01/lorem-ipsum/</link>
-      <pubDate>Thu, 01 Jan 2015 13:09:13 -0600</pubDate>
-      
-      <guid>https://danhojin.github.io/r-blog/2015/01/01/lorem-ipsum/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+      <guid>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</guid>
+      <description>다중 선형 회귀에서 특징 변수 선택 선형 회귀에서 오컴의 면도날 원리는 경쟁하는 모형 혹은 모델 간에 보다 적은 수의 특징 변수를 가진 모형을 선택하는 것이 낫다는 것으로 풀어볼 수 있다. 이 원리는 과적합 문제와 연관된다. 데이터 과학에서 가장 주의해야 할 것이 과적합인데 특징 변수가 많을 수록 그 위험이 커지기 때문이다. 지금까지 보지 못 한 새로운 데이터가 등장하였을 때 특히 문제가 된다. 오컴의 면도날 원리를 적용하기 위해서는 특징 변수를 제거해도 회귀 성능이 크게 손상되지 않는다는 점을 확인할 필요가 있다.</description>
     </item>
     
   </channel>

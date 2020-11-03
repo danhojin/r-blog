@@ -1,4 +1,5 @@
-baseURL = "https://danhojin.github.io/r-blog/"
+baseurl = "https://danhojin.github.io/r-blog/"
+# baseurl = "/"
 publishDir = "docs"
 languageCode = "ko-KR"
 title = "A Hugo website"

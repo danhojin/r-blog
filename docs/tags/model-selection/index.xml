@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Hugo website</title>
-    <link>https://danhojin.github.io/r-blog/</link>
-    <description>Recent content on A Hugo website</description>
+    <title>model selection on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/model-selection/</link>
+    <description>Recent content in model selection on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Thu, 29 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/model-selection/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>선형 회귀 모형의 변수 선택: F-검정</title>
       <link>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</link>
@@ -14,15 +14,6 @@
       
       <guid>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</guid>
       <description>다중 선형 회귀에서 특징 변수 선택 선형 회귀에서 오컴의 면도날 원리는 경쟁하는 모형 혹은 모델 간에 보다 적은 수의 특징 변수를 가진 모형을 선택하는 것이 낫다는 것으로 풀어볼 수 있다. 이 원리는 과적합 문제와 연관된다. 데이터 과학에서 가장 주의해야 할 것이 과적합인데 특징 변수가 많을 수록 그 위험이 커지기 때문이다. 지금까지 보지 못 한 새로운 데이터가 등장하였을 때 특히 문제가 된다. 오컴의 면도날 원리를 적용하기 위해서는 특징 변수를 제거해도 회귀 성능이 크게 손상되지 않는다는 점을 확인할 필요가 있다.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://danhojin.github.io/r-blog/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>https://danhojin.github.io/r-blog/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
     </item>
     
   </channel>

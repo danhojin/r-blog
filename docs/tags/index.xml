@@ -5,6 +5,79 @@
     <link>https://danhojin.github.io/r-blog/tags/</link>
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ko-KR</language><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>ko-KR</language>
+    <lastBuildDate>Thu, 29 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AIC</title>
+      <link>https://danhojin.github.io/r-blog/tags/aic/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/aic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BIC</title>
+      <link>https://danhojin.github.io/r-blog/tags/bic/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/bic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>F-test</title>
+      <link>https://danhojin.github.io/r-blog/tags/f-test/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/f-test/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lasso</title>
+      <link>https://danhojin.github.io/r-blog/tags/lasso/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/lasso/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linear regression</title>
+      <link>https://danhojin.github.io/r-blog/tags/linear-regression/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/linear-regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lm</title>
+      <link>https://danhojin.github.io/r-blog/tags/lm/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/lm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>model selection</title>
+      <link>https://danhojin.github.io/r-blog/tags/model-selection/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/model-selection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidymodels</title>
+      <link>https://danhojin.github.io/r-blog/tags/tidymodels/</link>
+      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/tidymodels/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
