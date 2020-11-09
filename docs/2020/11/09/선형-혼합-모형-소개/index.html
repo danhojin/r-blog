@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.77.0" />
+
+
+<title>선형 혼합 모형의 소개 - A Hugo website</title>
+<meta property="og:title" content="선형 혼합 모형의 소개 - A Hugo website">
+
+
+  <link href='https://danhojin.github.io/r-blog/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/r-blog/css/fonts.css" media="all">
+<link rel="stylesheet" href="/r-blog/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/r-blog/" class="nav-logo">
+    <img src="/r-blog/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/r-blog/about/">About</a></li>
+    
+    <li><a href="https://github.com/danhojin">GitHub</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">선형 혼합 모형의 소개</h1>
+
+    
+    <span class="article-date">2020-11-09</span>
+    
+
+    <div class="article-content">
+      
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="혼합-모형-개념의-소개-rail---선로-내-음파-전달-시험" class="section level1">
+<h1>혼합 모형 개념의 소개: Rail - 선로 내 음파 전달 시험</h1>
+<p>당신이 어떤 중요한 실험을 준비하고 있다고 해보자. 시편 하나를 준비하는데 비용이 크게 든다면 통계적으로 유의미한 수의 시편을 확보할 수가 없다. 이렇게 준비된 시편 하나에 여러번 반복 측정을 수행해도 시편 간 측정치의 차이가 시편 내 측정치의 차이보다 더 큰 경우가 생길 수 있다. 이와 같이 데이터의 구조는 일원배치 분산 분석(one-way anova)과 비슷하나 처치의 효과에는 관심이 없을 때 혼합 모형이 작동한다. 혼합 모형에서는 설명 변수가 고정 효과(fixed effect)와 임의 효과(random effect)로 구성된다고 본다[1].</p>
+<ul>
+<li>고정 효과는 응답의 평균에만 영향을 준다.</li>
+<li>임의 효과는 응답의 분산에만 영향을 준다.</li>
+</ul>
+<p>이것이 무슨 뜻인지 nlme 패키지의 Rail 데이터 셋을 통하여 파악해 보자. 단위 선로 6개 시편(Rail)을 제작한 후 임의로 선택하여 음파 전달 시간(travel)을 3회씩 측정하였다.</p>
+<pre class="r"><code>library(tidyverse)
+# library(nlme)  # Rail dataset
+library(lme4)  # sleepstudy datset
+
+
+data(&quot;Rail&quot;, package = &quot;nlme&quot;)
+rail &lt;- Rail %&gt;%
+  as_tibble() %&gt;%
+  mutate(Rail = factor(Rail, ordered = FALSE))
+
+rail %&gt;%
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   Rail  travel
+##   &lt;fct&gt;  &lt;dbl&gt;
+## 1 1         55
+## 2 1         53
+## 3 1         54
+## 4 2         26
+## 5 2         37
+## 6 2         32</code></pre>
+<pre class="r"><code>rail %&gt;%
+  ggplot(aes(x = Rail, y = travel)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = Rail), width = 0.2) +
+  ylab(&quot;travel time - 36,100 [ns]&quot;) +
+  xlab(&quot;rail subject&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>음파 전달은 물리적인 값으로 우리가 표준이라고 믿는 선로에서 하나의 값을 갖는다고 볼 수 있다. 다만 제조상 재료의 조성이나 형상에 불확실성이 존재하여 그로부터 측정치의 분산이 발생한다고 하자. 혼합 모형 식을 사용하면 다음과 같이 기술된다.</p>
+<pre class="r"><code>mod_formula &lt;- travel ~ 1 + (1 | Rail)</code></pre>
+<p>고정 효과의 1은 대푯값이 하나 있다는 뜻이다. 임의 효과는 괄호안에 기술된다. 전체 분산은 Rail에서 나오는데 하나의 Rail에서 반복 측정할 때 측정치가 가우시안 분포를 따른다는 뜻이다. lme4 패키지를 이용하여 적합해보자.</p>
+<pre class="r"><code>mod_1 &lt;- lmer(mod_formula, data = rail)
+summary(mod_1)</code></pre>
+<pre><code>## Linear mixed model fit by REML [&#39;lmerMod&#39;]
+## Formula: travel ~ 1 + (1 | Rail)
+##    Data: rail
+## 
+## REML criterion at convergence: 122.2
+## 
+## Scaled residuals: 
+##      Min       1Q   Median       3Q      Max 
+## -1.61883 -0.28218  0.03569  0.21956  1.61438 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Rail     (Intercept) 615.31   24.805  
+##  Residual              16.17    4.021  
+## Number of obs: 18, groups:  Rail, 6
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)    66.50      10.17   6.538</code></pre>
+<p>고정 효과와 임의 효과가 나뉘어 정리되어 있다. 고정 효과에서 추정 값은 66.5이고 시편에 따라 24.8정도 차이가 발생할 수 있으며 이때 동일 시편 내 측정에서는 표준 편차 4.0을 보일 수 있다라고 읽을 수 있다. 이는 선형 회귀를 단순히 적합해서는 얻기 어려운 해석이다.</p>
+</div>
+<div id="참고" class="section level1">
+<h1>참고</h1>
+<ol style="list-style-type: decimal">
+<li>마이클 크롤리 저, 염현식 역, 크롤리의 통계학 강의, 에이콘 출판사, 2016</li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/r-blog/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/r-blog/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

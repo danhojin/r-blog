@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linear mixed model on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/linear-mixed-model/</link>
+    <description>Recent content in linear mixed model on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Mon, 09 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/linear-mixed-model/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>선형 혼합 모형의 소개</title>
+      <link>https://danhojin.github.io/r-blog/2020/11/09/%EC%84%A0%ED%98%95-%ED%98%BC%ED%95%A9-%EB%AA%A8%ED%98%95-%EC%86%8C%EA%B0%9C/</link>
+      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/11/09/%EC%84%A0%ED%98%95-%ED%98%BC%ED%95%A9-%EB%AA%A8%ED%98%95-%EC%86%8C%EA%B0%9C/</guid>
+      <description>혼합 모형 개념의 소개: Rail - 선로 내 음파 전달 시험 당신이 어떤 중요한 실험을 준비하고 있다고 해보자. 시편 하나를 준비하는데 비용이 크게 든다면 통계적으로 유의미한 수의 시편을 확보할 수가 없다. 이렇게 준비된 시편 하나에 여러번 반복 측정을 수행해도 시편 간 측정치의 차이가 시편 내 측정치의 차이보다 더 큰 경우가 생길 수 있다. 이와 같이 데이터의 구조는 일원배치 분산 분석(one-way anova)과 비슷하나 처치의 효과에는 관심이 없을 때 혼합 모형이 작동한다.</description>
+    </item>
+    
+  </channel>
+</rss>

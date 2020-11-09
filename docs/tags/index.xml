@@ -6,7 +6,25 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Thu, 29 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>linear mixed model</title>
+      <link>https://danhojin.github.io/r-blog/tags/linear-mixed-model/</link>
+      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/linear-mixed-model/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lme4</title>
+      <link>https://danhojin.github.io/r-blog/tags/lme4/</link>
+      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/lme4/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>AIC</title>
       <link>https://danhojin.github.io/r-blog/tags/aic/</link>

@@ -4,7 +4,32 @@
   
   <url>
     <loc>https://danhojin.github.io/r-blog/</loc>
-    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/linear-mixed-model/</loc>
+    <lastmod>2020-11-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/lme4/</loc>
+    <lastmod>2020-11-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/post/</loc>
+    <lastmod>2020-11-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/tags/</loc>
+    <lastmod>2020-11-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://danhojin.github.io/r-blog/2020/11/09/%EC%84%A0%ED%98%95-%ED%98%BC%ED%95%A9-%EB%AA%A8%ED%98%95-%EC%86%8C%EA%B0%9C/</loc>
+    <lastmod>2020-11-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -39,16 +64,6 @@
   
   <url>
     <loc>https://danhojin.github.io/r-blog/tags/model-selection/</loc>
-    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://danhojin.github.io/r-blog/post/</loc>
-    <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://danhojin.github.io/r-blog/tags/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
   </url>
   
