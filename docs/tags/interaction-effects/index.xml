@@ -8,12 +8,12 @@
     <language>ko-KR</language>
     <lastBuildDate>Sat, 14 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/interaction-effects/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>교호 작용 선택을 위한 라쏘 회귀 - glinternet 소개</title>
-      <link>https://danhojin.github.io/r-blog/2020/11/14/%EA%B5%90%ED%98%B8-%EC%9E%91%EC%9A%A9-%EB%9D%BC%EC%8F%98-%ED%9A%8C%EA%B7%80-glinternet-%EC%86%8C%EA%B0%9C/</link>
+      <title>교호 작용 선택을 위한 라소 회귀 - glinternet 소개</title>
+      <link>https://danhojin.github.io/r-blog/2020/11/14/%EA%B5%90%ED%98%B8-%EC%9E%91%EC%9A%A9-%EB%9D%BC%EC%86%8C-%ED%9A%8C%EA%B7%80-glinternet-%EC%86%8C%EA%B0%9C/</link>
       <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://danhojin.github.io/r-blog/2020/11/14/%EA%B5%90%ED%98%B8-%EC%9E%91%EC%9A%A9-%EB%9D%BC%EC%8F%98-%ED%9A%8C%EA%B7%80-glinternet-%EC%86%8C%EA%B0%9C/</guid>
-      <description>glinternet 라쏘(lasso)나 릿지 회귀(ridge regression) 방법은 glmnet 패키지에 잘 구현되어 있으며, 이를 활용하면 특징 변수의 선택을 체계적으로 수행할 수 있다[1]. 이 패키지에는 교차 검증이 구현되어 있어 라그랑주 승수(lagrange multiplier)와 MSE 평균 및 MSE의 분산 관계를 파악할 수 있다. 그리고 그 관계로부터 적절히 선택된 변수를 제안해 준다. 하지만 교호 효과가 유의하나 주 효과가 유의하지 않는 경우에 glmnet은 주 효과를 제거해 버릴 수 있어 문제가 생긴다. 일반적으로 모델 해석을 분명하게 제시하기 위해 유의하지 않더라도 주 효과를 제거하지 않는데[2], 이런 문제를 다루기 위해 glinternet 패키지가 개발되었다[3].</description>
+      <guid>https://danhojin.github.io/r-blog/2020/11/14/%EA%B5%90%ED%98%B8-%EC%9E%91%EC%9A%A9-%EB%9D%BC%EC%86%8C-%ED%9A%8C%EA%B7%80-glinternet-%EC%86%8C%EA%B0%9C/</guid>
+      <description>glinternet 라소(lasso)나 능형 회귀(ridge regression) 방법은 glmnet 패키지에 잘 구현되어 있으며, 이를 활용하면 특징 변수의 선택을 체계적으로 수행할 수 있다[1]. 이 패키지에는 교차 검증이 구현되어 있어 라그랑주 승수(lagrange multiplier)와 MSE 평균 및 MSE의 분산 관계를 파악할 수 있다. 그리고 그 관계로부터 적절히 선택된 변수를 제안해 준다. 하지만 교호 효과가 유의하나 주 효과가 유의하지 않는 경우에 glmnet은 주 효과를 제거해 버릴 수 있어 문제가 생긴다. 일반적으로 모델 해석을 분명하게 제시하기 위해 유의하지 않더라도 주 효과를 제거하지 않는데[2], 이런 문제를 다루기 위해 glinternet 패키지가 개발되었다[3].</description>
     </item>
     
   </channel>
