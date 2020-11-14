@@ -6,7 +6,43 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Mon, 09 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>anova</title>
+      <link>https://danhojin.github.io/r-blog/tags/anova/</link>
+      <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/anova/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>glinternet</title>
+      <link>https://danhojin.github.io/r-blog/tags/glinternet/</link>
+      <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/glinternet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>interaction effects</title>
+      <link>https://danhojin.github.io/r-blog/tags/interaction-effects/</link>
+      <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/interaction-effects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lasso</title>
+      <link>https://danhojin.github.io/r-blog/tags/lasso/</link>
+      <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/lasso/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>linear mixed model</title>
       <link>https://danhojin.github.io/r-blog/tags/linear-mixed-model/</link>
@@ -49,15 +85,6 @@
       <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>https://danhojin.github.io/r-blog/tags/f-test/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>lasso</title>
-      <link>https://danhojin.github.io/r-blog/tags/lasso/</link>
-      <pubDate>Thu, 29 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://danhojin.github.io/r-blog/tags/lasso/</guid>
       <description></description>
     </item>
     
