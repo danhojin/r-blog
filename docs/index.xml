@@ -6,7 +6,16 @@
     <description>Recent content on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Sat, 14 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tidymodels 프레임 내 회귀 분석 기본</title>
+      <link>https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/</link>
+      <pubDate>Thu, 19 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/</guid>
+      <description>tidymodels 프레임 소개 R에는 데이터 과학에 사용되는 다양한 패키지가 존재하는데, 데이터 구조나 사용 방법이 패키지별로 각각의 원리에 의하여 파편화 되어 있다. 이를 통합하고 일관성 있는 사용자 경험을 제공하고, 예측 분석에 유용한 기능을 통합하려는 노력으로 caret 패키지가 개발되었다. 한편 데이터 과학에 유용한 패키지를 모아 공통적인 디자인 철학, 문법, 자료 구조를 공유하고자 tidyverse 패키지가 개발되었다. tidymodels 패키지는 caret의 목적을 tidyverse의 데이터 구조 및 함수형 데이터 처리 방식에 따르도록 새로이 개발한 것이다.</description>
+    </item>
+    
     <item>
       <title>교호 작용 선택을 위한 라소 회귀 - glinternet 소개</title>
       <link>https://danhojin.github.io/r-blog/2020/11/14/%EA%B5%90%ED%98%B8-%EC%9E%91%EC%9A%A9-%EB%9D%BC%EC%86%8C-%ED%9A%8C%EA%B7%80-glinternet-%EC%86%8C%EA%B0%9C/</link>

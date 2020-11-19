@@ -6,7 +6,16 @@
     <description>Recent content in tidymodels on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Thu, 29 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tidymodels 프레임 내 회귀 분석 기본</title>
+      <link>https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/</link>
+      <pubDate>Thu, 19 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/</guid>
+      <description>tidymodels 프레임 소개 R에는 데이터 과학에 사용되는 다양한 패키지가 존재하는데, 데이터 구조나 사용 방법이 패키지별로 각각의 원리에 의하여 파편화 되어 있다. 이를 통합하고 일관성 있는 사용자 경험을 제공하고, 예측 분석에 유용한 기능을 통합하려는 노력으로 caret 패키지가 개발되었다. 한편 데이터 과학에 유용한 패키지를 모아 공통적인 디자인 철학, 문법, 자료 구조를 공유하고자 tidyverse 패키지가 개발되었다. tidymodels 패키지는 caret의 목적을 tidyverse의 데이터 구조 및 함수형 데이터 처리 방식에 따르도록 새로이 개발한 것이다.</description>
+    </item>
+    
     <item>
       <title>선형 회귀 모형의 변수 선택: F-검정</title>
       <link>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</link>

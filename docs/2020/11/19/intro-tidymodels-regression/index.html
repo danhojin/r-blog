@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.78.2" />
+
+
+<title>tidymodels 프레임 내 회귀 분석 기본 - A Hugo website</title>
+<meta property="og:title" content="tidymodels 프레임 내 회귀 분석 기본 - A Hugo website">
+
+
+  <link href='https://danhojin.github.io/r-blog/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/r-blog/css/fonts.css" media="all">
+<link rel="stylesheet" href="/r-blog/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/r-blog/" class="nav-logo">
+    <img src="/r-blog/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/r-blog/about/">About</a></li>
+    
+    <li><a href="https://github.com/danhojin">GitHub</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">6 min read</span>
+    
+
+    <h1 class="article-title">tidymodels 프레임 내 회귀 분석 기본</h1>
+
+    
+    <span class="article-date">2020-11-19</span>
+    
+
+    <div class="article-content">
+      
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="tidymodels-프레임-소개" class="section level1">
+<h1>tidymodels 프레임 소개</h1>
+<p>R에는 데이터 과학에 사용되는 다양한 패키지가 존재하는데, 데이터 구조나 사용 방법이 패키지별로 각각의 원리에 의하여 파편화 되어 있다. 이를 통합하고 일관성 있는 사용자 경험을 제공하고, 예측 분석에 유용한 기능을 통합하려는 노력으로 caret 패키지가 개발되었다. 한편 데이터 과학에 유용한 패키지를 모아 공통적인 디자인 철학, 문법, 자료 구조를 공유하고자 tidyverse 패키지가 개발되었다. tidymodels 패키지는 caret의 목적을 tidyverse의 데이터 구조 및 함수형 데이터 처리 방식에 따르도록 새로이 개발한 것이다. 이 글에서는 tidymodels 프레임 내에세 회귀 분석을 수행하여 그 프레임의 구성을 엿볼 수 있도록 한다.</p>
+</div>
+<div id="예측-분석-시나리오" class="section level1">
+<h1>예측 분석 시나리오</h1>
+<p>지도 학습 문제를 받았다. 변수의 특성과 변수 사이의 관계는 분석이 끝날 때까지도 탐험해야 한다. 그 과정에 적절한 모델을 선택하고, 모델 변수를 선택하고, 대안 모델과 비교할 수 있어야 한다. 기계 학습 모델이 잘 작동하기 위해서는 변수를 적합히 변형시켜야 할 필요가 있다. 또한 기계 학습에서 쉽게 과적합될 수 있으므로 훈련데이터와 검정데이터를 잘 나눌 수 있어야 한다. 학습 모델의 성능을 평가해야 튜닝도 진행하고 모델 사이 비교도 가능할 것이다. 이런 일련에 과정에 필요한 기능을 tidymodels 패키지가 제공한다. 실제 데이터를 가지고 진행해보자.</p>
+</div>
+<div id="solubility-데이터-셋" class="section level1">
+<h1>solubility 데이터 셋</h1>
+<p>용해도 데이터는 AppliedPredictiveModeling 패키지의 것을 이용한다. 이미 학습 데이터와 검정 데이터가 나누어 져 있다. 응답 변수 solubility, FP로 시작하는 이산 변수와 그 외 특징 변수까지 모두 229개의 변수가 있고, 학습 데이터는 951개, 검정 데이터는 316개가 있다.</p>
+<pre class="r"><code>library(tidyverse)
+library(tidymodels)
+library(AppliedPredictiveModeling)
+
+data(solubility)
+
+sol_train &lt;- as_tibble(solTrainX) %&gt;%
+  mutate_if(~ str_detect(.x, &quot;FP&quot;)[1], factor) %&gt;%  # binary vars with &quot;FP&quot;
+  mutate(solubility = solTrainY) %&gt;%
+  relocate(solubility)
+
+sol_test &lt;- as_tibble(solTestX) %&gt;%
+  mutate_if(~ str_detect(.x, &quot;FP&quot;)[1], factor) %&gt;%  # binary vars with &quot;FP&quot;
+  mutate(solubility = solTestY) %&gt;%
+  relocate(solubility)
+
+# set.seed(952)
+# sol_split &lt;- initial_split(sol_train, strata = solubility)
+# sol_train &lt;- training(sol_split)
+# sol_test &lt;- testing(sol_split)</code></pre>
+</div>
+<div id="데이터-전처리" class="section level1">
+<h1>데이터 전처리</h1>
+<pre class="r"><code>sol_rec &lt;- recipe(solubility ~ ., data = sol_train) %&gt;%
+  step_BoxCox(all_predictors(), -all_nominal()) %&gt;%
+  # step_dummy(all_nominal()) %&gt;%
+  step_center(all_predictors()) %&gt;%
+  step_scale(all_predictors())
+
+sol_rec</code></pre>
+<pre><code>## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor        228
+## 
+## Operations:
+## 
+## Box-Cox transformation on all_predictors(), -all_nominal()
+## Centering for all_predictors()
+## Scaling for all_predictors()</code></pre>
+<p>tidyverser/tidymodels 패키지를 이용하면 코드 자체가 무엇을 하고 있는지 스스로 설명하게 된다. recipe에 formula를 사용하면 응답 변수와 특징 변수를 구분하여 등록할 수 있다. recipe 객체는 파이프 연산 %&gt;%을 통하여 추가적인 전처리 연산을 추가할 수 있다. step_ 항으로 시작하는 함수가 전처리 함수이며, 특징 변수에만 BoxCox, center, scale 함수를 적용하였다.</p>
+</div>
+<div id="랜덤-포레스트-ranger" class="section level1">
+<h1>랜덤 포레스트: ranger</h1>
+<p>tidymodels 패키지의 트리 회귀에서 랜덤 포레스트로 ranger 패키지를 쓸 수 있다. ranger 패키지는 기본 모델 변수만으로도 높은 성능을 보이는데, 심지어 변수의 변형 없이도, 또한 NA가 포함된 경우에도 회귀나 분류 작업을 수행할 수 있다. 큰 데이터 셋에 대해서는 계산량이 많이 필요하므로 고성능 작업을 위해 고안된 catboost 등 다른 패키지를 이용하는 것이 낫다. 다음 절차를 통하여 랜덤 포레스트로 회귀 분석을 수행하였다.</p>
+<pre class="r"><code>rf_mod &lt;- rand_forest() %&gt;%
+  set_engine(&quot;ranger&quot;, importance = &quot;impurity&quot;) %&gt;%
+  set_mode(mode = &quot;regression&quot;)
+
+rf_wf &lt;- workflow() %&gt;%
+  add_model(rf_mod) %&gt;%
+  add_recipe(sol_rec)
+
+rf_fit &lt;- fit(rf_wf, data = sol_train)
+
+rf_metric &lt;- sol_test %&gt;%
+  select(solubility) %&gt;%
+  bind_cols(predict(rf_fit, new_data = sol_test)) %&gt;%
+  metrics(truth = solubility, .pred)
+
+rf_metric</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.679
+## 2 rsq     standard       0.896
+## 3 mae     standard       0.489</code></pre>
+<p><span class="math inline">\(R^2\)</span>가 0.89로 높게 나와 있다. 랜덤 포레스트를 이용한 경우 쉽게 vip(variable importance plots) 변수 중요도 그래프를 얻을 수 있다.</p>
+<pre class="r"><code>library(vip)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;vip&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:utils&#39;:
+## 
+##     vi</code></pre>
+<pre class="r"><code>rf_fit %&gt;%
+  pull_workflow_fit() %&gt;%
+  vip()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>FP로 시작하는 이항 변수는 중요도가 떨어지는 것을 알 수 있다.</p>
+</div>
+<div id="단순-선형-회귀-lm" class="section level1">
+<h1>단순 선형 회귀: lm</h1>
+<p>단순 선형 회귀로 모델 변수가 없는 lm을 수행해보자. 설명력에서 막강한 선형 회귀 모델은 여전히 휴효한 도구이다.</p>
+<pre class="r"><code>lm_mod &lt;- linear_reg() %&gt;%
+  set_engine(&quot;lm&quot;)
+
+lm_wf &lt;- workflow() %&gt;%
+  add_model(lm_mod) %&gt;%
+  add_recipe(sol_rec)
+
+lm_fit &lt;- fit(lm_wf, data = sol_train)
+
+lm_pred &lt;- predict(lm_fit, new_data = sol_test)
+
+lm_metric &lt;- lm_pred %&gt;%
+  bind_cols(tibble(truth = solTestY)) %&gt;%
+  metrics(truth = truth, .pred)
+
+lm_metric</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.770
+## 2 rsq     standard       0.864
+## 3 mae     standard       0.565</code></pre>
+<p>ranger로 수행한 랜덤 포레스트보다 성능이 떨어지지만 이 문제의 경우 lm만으로도 많은 설명이 가능하다는 것을 확인할 수 있다. 몇 개의 계수를 살펴봐도 t값이 상당히 작아 제거 가능성이 있는 것을 확인할 수 있다. 선형 회귀에서 변수 선택을 가능하게 하는 것이 라소 회귀이며 다음 절에서 살펴보겠다.</p>
+<pre class="r"><code>head(tidy(lm_fit))</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)  -2.72      0.0176 -155.     0      
+## 2 FP001         0.0784    0.147     0.533  0.594  
+## 3 FP002        -0.0124    0.130    -0.0958 0.924  
+## 4 FP003        -0.0172    0.0643   -0.267  0.789  
+## 5 FP004        -0.186     0.0649   -2.87   0.00421
+## 6 FP005        -0.309     0.155    -2.00   0.0463</code></pre>
+</div>
+<div id="라소-회귀-glmnet" class="section level1">
+<h1>라소 회귀: glmnet</h1>
+<p>glmnet는 내부적으로 교차검증 기능이 있으나 이 글에서는 tidymodels의 tune 패키지를 이용하겠다. 다음 코드에는 교차 검증을 위해서 vfold_cv를 이용하고 모델 변수 설정을 위하여 expand_grid를 활용하였다.</p>
+<pre class="r"><code>ll_mod &lt;- linear_reg(penalty = tune(), mixture = 1) %&gt;%
+  set_engine(&quot;glmnet&quot;)
+
+ll_wf &lt;- workflow() %&gt;%
+  add_model(ll_mod) %&gt;%
+  add_recipe(sol_rec)
+
+ll_tune_grid &lt;- expand_grid(penalty = 10^seq(-4, -1, length.out = 30))
+
+set.seed(952)
+folds &lt;- vfold_cv(sol_train, v = 10)
+ll_fit_rs &lt;- ll_wf %&gt;%
+  tune_grid(resample = folds,
+            grid = ll_tune_grid)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rlang&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,
+##     flatten_lgl, flatten_raw, invoke, list_along, modify, prepend,
+##     splice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;vctrs&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     data_frame</code></pre>
+<pre><code>## The following object is masked from &#39;package:tibble&#39;:
+## 
+##     data_frame</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<pre><code>## Loaded glmnet 4.0-2</code></pre>
+<pre class="r"><code>best_ll &lt;- ll_fit_rs %&gt;%
+  select_best(&quot;rmse&quot;)
+
+ll_fit_rs %&gt;%
+  collect_metrics() %&gt;%
+  ggplot(aes(x = penalty, y = mean)) +
+  geom_point() +
+  geom_line() +
+  geom_vline(aes(xintercept = best_ll$penalty), lty = 2) +
+  geom_errorbar(aes(ymin = mean - std_err, ymax = mean + std_err)) +
+  facet_wrap(~ .metric, scales = &quot;free&quot;, nrow = 2)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>그래프의 penalty는 glmnet의 라그랑주 승스 <span class="math inline">\(\lambda\)</span>를 의미한다. 점선으로 rmse기준으로 best 모델을 위한 penalty가 도시되어 있다. 보다 간결한 모델을 위해서는 select_by_pct_loss나 select_by_one_std_err 함수를 이용하여 추가 검토를 거쳐야 한다. 이 글에서는 간단하게 select_best를 이용하여 penalty를 결정하겠다. 적합 결과는 다음과 같다. <span class="math inline">\(R^2 = 0.876\)</span>으로 단순 선형 회귀보다 근소한 우위를 보였다.</p>
+<pre class="r"><code>ll_fit &lt;- ll_wf %&gt;%
+  finalize_workflow(best_ll) %&gt;%
+  fit(data = sol_train)
+
+ll_metric &lt;- sol_test %&gt;%
+  select(solubility) %&gt;%
+  bind_cols(predict(ll_fit, new_data = sol_test)) %&gt;%
+  metrics(truth = solubility, .pred)
+
+ll_metric</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.731
+## 2 rsq     standard       0.876
+## 3 mae     standard       0.545</code></pre>
+<p>glmnet 분석 결과로부터 단순 선형 회귀 모델에서 큰 t를 가졌던 변수가 일부 제거되어 있는 것을 확인할 수 있다.</p>
+<pre class="r"><code>tidy(ll_fit) %&gt;%
+  filter(abs(estimate) &gt; 1e-3) %&gt;%
+  select(-penalty) %&gt;%
+  head(n = 10)</code></pre>
+<pre><code>## # A tibble: 10 x 2
+##    term        estimate
+##    &lt;chr&gt;          &lt;dbl&gt;
+##  1 (Intercept) -2.72   
+##  2 FP002        0.0368 
+##  3 FP003       -0.0332 
+##  4 FP004       -0.141  
+##  5 FP007       -0.0142 
+##  6 FP009       -0.0438 
+##  7 FP010        0.0181 
+##  8 FP011        0.00356
+##  9 FP012       -0.0113 
+## 10 FP013       -0.110</code></pre>
+</div>
+<div id="맺으며" class="section level1">
+<h1>맺으며</h1>
+<p>이 글에서 살펴본 바와 같이 예측 분석을 위한 기계 학습 분야에서 tidymodels 패키지는 작업 흐름이 부드럽게 설계되어 있다. 전처리나 모델, 성능 측정 등 필요한 기능들이 조화롭게 녹아든다. 탐색적 데이터 분석으로부터 예측 모델 수립에까지 자연스러운 흐름을 만들수 있다. tidymodels를 활용하면 작업 흐름이 코드에 잘 나타나게 되어 코드 자체가 훌륭한 향후 작업에 참고 문서가 되는 장점이 있다.</p>
+<p>최근 tidymodels 패키지와 같이 tidyverse에 영향을 받는 패키지가 많이 등장하고 있다. tidyquant 패키지와 같은 것이 대표적이다. tidy* 패키지들을 통하여 R의 넓은 생태계를 보다 쉽게 탐험해 볼 수 있을 것이다.</p>
+</div>
+<div id="참고" class="section level1">
+<h1>참고</h1>
+<p>[1] 막스 쿤, 키엘 존슨, 권정민 역, 실전 예측 분석 모델링, Springer/에이콘, 2018</p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/r-blog/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/r-blog/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/r-blog/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
