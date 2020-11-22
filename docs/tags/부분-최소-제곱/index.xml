@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>부분 최소 제곱 on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1/</link>
+    <description>Recent content in 부분 최소 제곱 on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>부분 최소 제곱 PLS 소개</title>
+      <link>https://danhojin.github.io/r-blog/2020/11/20/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1-pls-%EC%86%8C%EA%B0%9C/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/11/20/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1-pls-%EC%86%8C%EA%B0%9C/</guid>
+      <description>부분 최소 제곱 PLS 회귀 PLS(Partial Least Squares) 회귀는 주성분 분석과 다중 회귀를 결합·확장하여 개발되었다. 계량 경제 등 사회 과학 문제에 활용되기 시작하였고, 계산 화학 등 그 적용 분야가 점점 확장되어 왔다. 통상적인 다중 선형 회귀에서 다음 모델에 대하여,
+\(Y = X\beta + \varepsilon\)
+오차항 \(\varepsilon = Y - X \beta\)을 최소 제곱 방식으로 구한다는 것은 두 벡터의 차를 줄이는 \(\beta\)를 얻는 것이다. 개념적으로 두 벡터의 내적을 최대로 만들어도 오차항을 최소화하는 목적을 달성할 수 있다.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,52 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Thu, 19 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>partial least squares</title>
+      <link>https://danhojin.github.io/r-blog/tags/partial-least-squares/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/partial-least-squares/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pca</title>
+      <link>https://danhojin.github.io/r-blog/tags/pca/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/pca/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pls</title>
+      <link>https://danhojin.github.io/r-blog/tags/pls/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/pls/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plsr</title>
+      <link>https://danhojin.github.io/r-blog/tags/plsr/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/plsr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>부분 최소 제곱</title>
+      <link>https://danhojin.github.io/r-blog/tags/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1/</link>
+      <pubDate>Fri, 20 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>glmnet</title>
       <link>https://danhojin.github.io/r-blog/tags/glmnet/</link>

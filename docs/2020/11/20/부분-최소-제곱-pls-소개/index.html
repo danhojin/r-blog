@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.78.2" />
+
+
+<title>부분 최소 제곱 PLS 소개 - A Hugo website</title>
+<meta property="og:title" content="부분 최소 제곱 PLS 소개 - A Hugo website">
+
+
+  <link href='https://danhojin.github.io/r-blog/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/r-blog/css/fonts.css" media="all">
+<link rel="stylesheet" href="/r-blog/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/r-blog/" class="nav-logo">
+    <img src="/r-blog/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/r-blog/about/">About</a></li>
+    
+    <li><a href="https://github.com/danhojin">GitHub</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">부분 최소 제곱 PLS 소개</h1>
+
+    
+    <span class="article-date">2020-11-20</span>
+    
+
+    <div class="article-content">
+      
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="부분-최소-제곱-pls-회귀" class="section level1">
+<h1>부분 최소 제곱 PLS 회귀</h1>
+<p>PLS(Partial Least Squares) 회귀는 주성분 분석과 다중 회귀를 결합·확장하여 개발되었다. 계량 경제 등 사회 과학 문제에 활용되기 시작하였고, 계산 화학 등 그 적용 분야가 점점 확장되어 왔다. 통상적인 다중 선형 회귀에서 다음 모델에 대하여,</p>
+<p><span class="math inline">\(Y = X\beta + \varepsilon\)</span></p>
+<p>오차항 <span class="math inline">\(\varepsilon = Y - X \beta\)</span>을 최소 제곱 방식으로 구한다는 것은 두 벡터의 차를 줄이는 <span class="math inline">\(\beta\)</span>를 얻는 것이다. 개념적으로 두 벡터의 내적을 최대로 만들어도 오차항을 최소화하는 목적을 달성할 수 있다. 주성분 분석이 이런 원리를 이용한다. 특성의 가중치 고정하고 <span class="math inline">\(||w|| = 1\)</span>, 특성 벡터의 선형 변환 후 <span class="math inline">\(t = X w\)</span> 그 크기를 생각해 보자. X를 특이값 분해(SVD, singular value decomposition)하여 <span class="math inline">\(X = U \Sigma V^T\)</span> 삽입하면 다음과 같다.</p>
+<p><span class="math inline">\(||t||^2 = ||w^T X^T X w|| = || w^T V \Sigma^T U^T U \Sigma V^T w|| = || w^T V \Sigma^2 V^T w||\)</span></p>
+<p>혹은, <span class="math inline">\(||t||^2 \le ||\Sigma^2||\)</span> 식이 되어, 주성분 분석은 X의 공분산 특성을 최대한 유지하는 가중치를 구해내는 다음 방법이 된다.</p>
+<p><span class="math inline">\(\text{argmax}_{w^T w = 1} w^T X^T X w\)</span></p>
+<p>주성분 분석으로 특성의 전체 분산 특성을 간직하면서 상관성이 높은 변수를 제거해 나갈수 있다. 하지만 응답 특성이 특징 변수의 분산과 크게 상관이 없는 경우, 주성분 분석을 통하여 예측 변수를 줄여 회귀를 진행하여도 큰 효과를 보지 못할 수 있다. 이 점에서 부분 최소 제곱 방법으로 확장된다. 위에서 정의된 문제를 <span class="math inline">\(t = X w\)</span>와 <span class="math inline">\(u = Yc\)</span> 식을 이용하여 <span class="math inline">\(\max t^T u\)</span> 혹은 다음과 같은 문제로 바꾼다.</p>
+<p><span class="math inline">\(\text{argmax}_{w^T w = 1, c^T c = 1} w^T X^T Y c\)</span></p>
+<p>이 식을 살펴보면 최소 제곱과 주성분 분석이 결합된 것을 알 수 있다. 이 식을 풀면 <span class="math inline">\(X = T P^T\)</span>로 <span class="math inline">\(T\)</span>는 <span class="math inline">\(T^T T = I\)</span>인 점수 행렬(score matrix)이라 하고, <span class="math inline">\(P\)</span>는 하중 행렬(loading matrix)이라 칭한다. <span class="math inline">\(Y\)</span>는 추정값으로 <span class="math inline">\(\hat Y = T B C^T\)</span>로 <span class="math inline">\(B\)</span>는 대각 형렬로 회귀 가중치가 담겨있다. 수치적으로 푸는 방법에 대해서는 pls 패키지 매뉴얼[1]이나 Abdi[2]의 문헌을 참고하라.</p>
+</div>
+<div id="적용-예" class="section level1">
+<h1>적용 예</h1>
+<p>pls 패키지의 gasoline 예제로 간단하게 사용 방법을 살펴보자. gasoline 데이터 셋에는 온탄가 (octane) 응답 변수와 측정 NIR 스팩트럼 특징 변수가 들어있다. 매뉴얼과 다르게 tidy 정리후 해석을 진행하였다.</p>
+<pre class="r"><code>library(tidyverse)
+library(GGally)
+library(pls)  # partial least squares package
+
+options(digits = 4)
+
+data(gasoline)
+
+m &lt;- matrix(gasoline$NIR, nrow = 60)
+colnames(m) &lt;- seq(900, 1700, by = 2)
+gas_data &lt;- as_tibble(m) %&gt;%
+  mutate(octane = gasoline$octane) %&gt;%
+  relocate(octane)
+# gas_data[1:5, c(1, sample(2:402, size = 5))]</code></pre>
+<p>매뉴얼 대로 60개의 NIR스팩트럼을 50개의 훈련셋과 10개의 검정셋으로 나누었다. 몇 개 주파수에 대해서만 상관성 및 산점도를 그려본다.</p>
+<pre class="r"><code>gas_train &lt;- gas_data[1:50,]
+gas_test &lt;- gas_data[51:60,]
+
+gas_train %&gt;%
+  select(octane, &quot;1200&quot;, &quot;1300&quot;, &quot;1400&quot;, &quot;1410&quot;) %&gt;%
+  ggpairs()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>주파수 1400 nm와 1410 nm의 데이터는 이웃 주파수로 상관성이 높은데 octane과의 상관성에는 차이가 난다. 1400 nm와 1200 nm를 비교해 보면 주파수가 떨어져 있어도 상관성이 높을 수 있다는 것을 확인하였다. 스펙트럼 전체의 측정 결과를 살펴보자.</p>
+<pre class="r"><code>gas_train %&gt;%
+  select(-octane) %&gt;%
+  mutate(id = row_number()) %&gt;%
+  pivot_longer(cols = -id, names_to = &quot;freq&quot;, values_to = &quot;log_reciprocal_R&quot;) %&gt;%
+  mutate(freq = as.numeric(freq)) %&gt;%
+  ggplot(aes(x = freq, y = log_reciprocal_R, color = id)) +
+  geom_line() +
+  labs(title = &quot;Gasoline NIR spectra&quot;) +
+  xlab(&quot;frequency [nm]&quot;) +
+  ylab(&quot;log(1/R)&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>900 nm에서 1400 nm까지 401개의 측정 점의 데이터가 특성값이며 이웃 측정값과 상관 관계가 높고, 마루 근방에서 분산이 커지는 것을 확인하였다. 훈련 데이터가 50개 뿐으로 401개의 특성 값으로 단순하게 선형회귀를 수행할 수 없다. 부분 최소 제곱 방식으로 적합을 수행해 보자. LOO(leave-one-out) 방식의 교차 검증을 수행하여 몇 개의 항을 이용할 지 모델 변수에 대한 튜닝을 할 수 있다.</p>
+<pre class="r"><code>fit_1 &lt;- plsr(octane ~ ., ncomp = 10, data = gas_train, validation = &quot;LOO&quot;)
+summary(fit_1)</code></pre>
+<pre><code>## Data:    X dimension: 50 401 
+##  Y dimension: 50 1
+## Fit method: kernelpls
+## Number of components considered: 10
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 50 leave-one-out segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           1.545    1.357   0.2966   0.2524   0.2476   0.2398   0.2319
+## adjCV        1.545    1.356   0.2947   0.2521   0.2478   0.2388   0.2313
+##        7 comps  8 comps  9 comps  10 comps
+## CV      0.2386   0.2316   0.2449    0.2673
+## adjCV   0.2377   0.2308   0.2438    0.2657
+## 
+## TRAINING: % variance explained
+##         1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps  8 comps
+## X         78.17    85.58    93.41    96.06    96.94    97.89    98.38    98.85
+## octane    29.39    96.85    97.89    98.26    98.86    98.96    99.09    99.16
+##         9 comps  10 comps
+## X         99.02     99.19
+## octane    99.28     99.39</code></pre>
+<pre class="r"><code>ec &lt;- tibble(explained = explvar(fit_1)) %&gt;%
+  mutate(comp = 1:10,
+         cexplained = cumsum(explained))
+ec %&gt;%
+  ggplot(aes(x = comp, y = cexplained)) +
+  scale_x_continuous(breaks = c(1, 3, 5, 10),
+                     labels = c(1, 3, 5, 10)) +
+  labs(title = &quot;Cumulative amount of variance explained&quot;) +
+  xlab(&quot;components&quot;) +
+  ylab(&quot;X variance explained [%]&quot;) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>X의 분산은 3개 항이면 93%를 설명할 수 있고, octane은 2개 항으로 대부분의 분산을 설명할 수 있다.</p>
+<pre class="r"><code>plot(RMSEP(fit_1), legendpos = &quot;topright&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>적합 수행 후 예측은 다음과 같이 수행할 수 있다. 이때 사용할 항의 개수를 지정해 준다.</p>
+<pre class="r"><code>pred &lt;- predict(fit_1, ncomp = c(1, 2, 3), newdata = gas_test)
+pred &lt;- tibble(&quot;1&quot; = pred[,,1], &quot;2&quot; = pred[,,2], &quot;3&quot; = pred[,,3]) %&gt;%
+  pivot_longer(cols = everything(), names_to = &quot;ncomp&quot;, values_to = &quot;octane&quot;)
+pred %&gt;%
+  ggplot(aes(x = ncomp, y = octane)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.1)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>2항이나 3항을 사용한 예측 결과가 거의 동일한 것을 확인할 수 있다.</p>
+<pre class="r"><code>library(tidymodels)
+
+pred %&gt;%
+  pivot_wider(names_from = ncomp, values_from = octane) %&gt;%
+  unnest(cols = everything()) %&gt;%
+  bind_cols(truth = gas_test$octane) %&gt;%
+  metrics(truth = truth, &quot;2&quot;)</code></pre>
+<pre><code>## Warning: Values are not uniquely identified; output will contain list-cols.
+## * Use `values_fn = list` to suppress this warning.
+## * Use `values_fn = length` to identify where the duplicates arise
+## * Use `values_fn = {summary_fun}` to summarise duplicates</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.244
+## 2 rsq     standard       0.977
+## 3 mae     standard       0.210</code></pre>
+<p>2항 만으로도 <span class="math inline">\(R^2=0.97\)</span>로 높은 설명력을 가진 적합이 수행되었음을 확인할 수 있다.</p>
+</div>
+<div id="참고" class="section level1">
+<h1>참고</h1>
+<ol style="list-style-type: decimal">
+<li>Herve Abdi, Partial Least Squares (PLS) Regression, <a href="https://personal.utdallas.edu/~herve/Abdi-PLS-pretty.pdf" class="uri">https://personal.utdallas.edu/~herve/Abdi-PLS-pretty.pdf</a></li>
+<li>Bjorn-Helge Mevik, Ron Wehrens, Introduction to the pls package, <a href="https://cran.r-project.org/web/packages/pls/vignettes/pls-manual.pdf" class="uri">https://cran.r-project.org/web/packages/pls/vignettes/pls-manual.pdf</a>, August 4, 2020</li>
+<li>막스 쿤, 실전 예측 분석 모델링, 권정민 역, Springer/에이콘, 2018</li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/r-blog/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/r-blog/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/r-blog/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
