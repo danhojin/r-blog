@@ -34,7 +34,7 @@ $\text{argmax}_{w^T w = 1, c^T c = 1} w^T X^T Y c$
 
 # 적용 예
 
-pls 패키지의 gasoline 예제로 간단하게 사용 방법을 살펴보자. gasoline 데이터 셋에는 온탄가 (octane) 응답 변수와 측정 NIR 스팩트럼 특징 변수가 들어있다. 매뉴얼과 다르게 tidy 정리후 해석을 진행하였다. 
+pls 패키지의 gasoline 예제로 간단하게 사용 방법을 살펴보자. gasoline 데이터 셋에는 옥탄가 (octane) 응답 변수와 측정 NIR 스팩트럼 특징 변수가 들어있다. 매뉴얼과 다르게 tidy 정리후 해석을 진행하였다. 
 
 
 ```{r, message=FALSE}
@@ -104,7 +104,7 @@ ec %>%
   geom_point()
 ```
 
-X의 분산은 3개 항이면 93%를 설명할 수 있고, octane은 2개 항으로 대부분의 분산을 설명할 수 있다. 
+X의 분산은 3개 항이면 93%를 설명할 수 있고, octane은 2개 항으로 97%의 분산을 설명할 수 있다. 
 
 ```{r}
 plot(RMSEP(fit_1), legendpos = "topright")

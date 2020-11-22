@@ -31,7 +31,7 @@ tags:
 </div>
 <div id="적용-예" class="section level1">
 <h1>적용 예</h1>
-<p>pls 패키지의 gasoline 예제로 간단하게 사용 방법을 살펴보자. gasoline 데이터 셋에는 온탄가 (octane) 응답 변수와 측정 NIR 스팩트럼 특징 변수가 들어있다. 매뉴얼과 다르게 tidy 정리후 해석을 진행하였다.</p>
+<p>pls 패키지의 gasoline 예제로 간단하게 사용 방법을 살펴보자. gasoline 데이터 셋에는 옥탄가 (octane) 응답 변수와 측정 NIR 스팩트럼 특징 변수가 들어있다. 매뉴얼과 다르게 tidy 정리후 해석을 진행하였다.</p>
 <pre class="r"><code>library(tidyverse)
 library(GGally)
 library(pls)  # partial least squares package
@@ -103,7 +103,7 @@ ec %&gt;%
   ylab(&quot;X variance explained [%]&quot;) +
   geom_point()</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>X의 분산은 3개 항이면 93%를 설명할 수 있고, octane은 2개 항으로 대부분의 분산을 설명할 수 있다.</p>
+<p>X의 분산은 3개 항이면 93%를 설명할 수 있고, octane은 2개 항으로 97%의 분산을 설명할 수 있다.</p>
 <pre class="r"><code>plot(RMSEP(fit_1), legendpos = &quot;topright&quot;)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>적합 수행 후 예측은 다음과 같이 수행할 수 있다. 이때 사용할 항의 개수를 지정해 준다.</p>
