@@ -1,0 +1,103 @@
+---
+title: 다구치 방법으로 회로 간 최적 결합 탐색
+author: ''
+date: '2020-11-29'
+slug: 다구치-회로-결합
+categories: []
+tags:
+  - taguchi method
+  - robust design
+  - 다구치 방법
+  - 강건 설계
+---
+
+# 다구치 방법
+
+실험 계획 방법과 분산 분석은 제품이나 공정을 설계하고 개선하는데 적극 활용되고 있다[1, 2]. 다구치 방법은 신호 대 잡음의 비인 SN비로 손실 함수를 정의하여 제어 인자 조합의 성능을 비교할 수 있도록 한다. 실험 계획은 실험 계획법의 부분 요인 설계 등의 방법을 이용하여 세우거나, 특히 다구치 방법에서 제안하는 직교배열을 이용하여 세울 수 있다[3]. 이 글에서는 직접 회로의 최대 결합 강도를 달성하기 위하여 다구치 방법으로 설계 파라미터를 탐색해 본다[1].
+
+# 실험 계획 및 측정 결과
+
+실험 인자는 A, B, C, D 4가지이며, 각 요인의 수준은 2개이다. 각 실험에 대하여 5회 반복 측정을 수행하였다. 
+
+```{r, message=FALSE}
+library(tidyverse)
+
+
+circuits <- tibble(
+  A = rep(c(-1, 1), each = 4, times = 1),
+  B = rep(c(-1, 1), each = 2, times = 2),
+  C = rep(c(-1, 1), each = 1, times = 4),
+  D = c(-1, 1, 1, -1, 1, -1, -1, 1),
+  y1 = c(73, 87.7, 80.5, 79.8, 85.2, 78, 78.4, 90.2),
+  y2 = c(73.2, 86.4, 81.4, 77.8, 85, 75.5, 72.8, 87.4),
+  y3 = c(72.8, 86.9, 82.6, 81.3, 80.4, 83.1, 80.5, 92.9),
+  y4 = c(72.2, 87.9, 81.3, 79.8, 85.2, 81.2, 78.4, 90),
+  y5 = c(76.2, 86.4, 82.1, 78.2, 83.6, 79.9, 67.9, 91.1)
+) %>%
+  mutate(id = row_number()) %>%
+  relocate(id)
+
+circuits
+```
+
+측정치의 평균, 분산, SN비는 tidyverse 함수들을 이용하여 다음과 같이 계산할 수 있다. 다구치 방식에서 분산은 통계에서 주로 사용하는 불편 추정량을 이용하지 않는 경우가 있다는 점을 언급해 두겠다. 
+
+```{r}
+circuits <- circuits %>%
+  select(-c(A, B, C, D)) %>%
+  pivot_longer(cols = -id) %>%
+  group_by(id) %>%
+  summarise(m = mean(value),
+            s = sd(value),
+            sn = -10 * log10(1 / 5 * sum(1 / value^2))) %>%
+  left_join(circuits, by = "id")
+
+circuits
+```
+
+8번 실험의 조합이 SN비가 가장 크다는 것을 확인하였다. 각 요인의 영향은 선형 회귀를 통하여 확인해 볼 수 있다. 
+
+```{r}
+fit.1 <- lm(sn ~ A + B + C + D, data = circuits)
+summary(fit.1)
+```
+
+요인 B의 효과는 유의하지 않다. 주 효과를 다음과 같이 도시할 수 있다.
+
+```{r}
+coefs <- as_tibble(coef(fit.1))
+intercept = coefs %>% slice(1) %>% pull()
+coef <- coefs %>%
+  slice(-1) %>%
+  mutate(Factor = c("A", "B", "C", "D"))
+coef %>%
+  mutate(l1 = intercept - value,
+         l2 = intercept + value) %>%
+  select(-value) %>%
+  pivot_longer(cols = -Factor) %>%
+  mutate(name = factor(name, ordered = TRUE),
+         name = as.numeric(name)) %>%
+  ggplot(aes(x = name, y = value)) +
+  geom_line() +
+  facet_wrap(~ Factor, nrow = 1) +
+  geom_point() +
+  geom_hline(yintercept = intercept, linetype = 20) +
+  ylab("SN") +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+요인 C와 D의 회로 접합 강도에 미치는 영향이 큰 것을 알 수 있다. 이 요인을 중시하여 결합 방법을 결정할 필요가 있다.
+
+# 맺으며
+
+이 글에서는 성능 특성만으로 다구치 방법의 일면을 확인해 보았다. 하지만 제조 및 공정 설계 및 개선을 위해서는 성능뿐만 아니라 비용을 따져봐야 한다. 이 비용에는 재 가공이나 판매 후 서비스 비용까지 종합적으로 고려하여야 한다. 파라미터 선택과 허용차 설계까지 개발 부서의 라인외 품질 관리를 강화해 내는 것이 다구치 품질 관리의 철학이라고 할 수 있다.
+
+
+# 참고
+
+1. Ting Kong, Taguchi methods in experimental design, https://www.lexjansen.com/mwsug/1996/MWSUG96021.pdf
+
+2. Ron S. Kenett and Shelemyahu Zacks, Modern industrial statistics, Chapter 13. Quality by Design, Duxbury press, 1998
+
+3. Orthogonal arrays (Taguchi Designs), https://www.york.ac.uk/depts/maths/tables/orthogonal.htm

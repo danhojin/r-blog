@@ -6,7 +6,43 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Fri, 20 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>robust design</title>
+      <link>https://danhojin.github.io/r-blog/tags/robust-design/</link>
+      <pubDate>Sun, 29 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/robust-design/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>taguchi method</title>
+      <link>https://danhojin.github.io/r-blog/tags/taguchi-method/</link>
+      <pubDate>Sun, 29 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/taguchi-method/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>강건 설계</title>
+      <link>https://danhojin.github.io/r-blog/tags/%EA%B0%95%EA%B1%B4-%EC%84%A4%EA%B3%84/</link>
+      <pubDate>Sun, 29 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/%EA%B0%95%EA%B1%B4-%EC%84%A4%EA%B3%84/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>다구치 방법</title>
+      <link>https://danhojin.github.io/r-blog/tags/%EB%8B%A4%EA%B5%AC%EC%B9%98-%EB%B0%A9%EB%B2%95/</link>
+      <pubDate>Sun, 29 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/%EB%8B%A4%EA%B5%AC%EC%B9%98-%EB%B0%A9%EB%B2%95/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>partial least squares</title>
       <link>https://danhojin.github.io/r-blog/tags/partial-least-squares/</link>
