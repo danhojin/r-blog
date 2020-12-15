@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EstimationTools on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/estimationtools/</link>
+    <description>Recent content in EstimationTools on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Mon, 14 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/estimationtools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EstimationTools: 최대 우도 측정 R 패키지</title>
+      <link>https://danhojin.github.io/r-blog/2020/12/14/maxlogl-%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84/</link>
+      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/12/14/maxlogl-%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84/</guid>
+      <description>최대 우도 추정 최대 우도 추정(MLE, Maximum Likelihood Estimation)은 관측치 \(x\)가 주어졌을 때 변수 \(\mu\)를 가지는 확률 밀도 함수의 로그 값을 최대로 하는 \(\mu\)를 구하는 방법이다[1].
+\(\hat \mu = \text{arg max}_\mu l_x (\mu)\)
+여기에서 \(l_x (\mu) = \log f_{\mu} (x)\)이고, \(f_{\mu} (x)\)는 확률 밀도이다.
+R에서 EstimationTools 패키지를 이용하여 최대 우도를 추정할 수 있다. 이 글에서는 컴퓨터 시대의 통계적 추론 책의 그림 4.1을 재현하면서 그 패키지의 사용 방법을 정리하기로 하겠다.</description>
+    </item>
+    
+  </channel>
+</rss>

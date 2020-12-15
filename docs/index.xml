@@ -6,7 +6,28 @@
     <description>Recent content on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Sun, 29 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EstimationTools: 최대 우도 측정 R 패키지</title>
+      <link>https://danhojin.github.io/r-blog/2020/12/14/maxlogl-%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84/</link>
+      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/12/14/maxlogl-%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84/</guid>
+      <description>최대 우도 추정 최대 우도 추정(MLE, Maximum Likelihood Estimation)은 관측치 \(x\)가 주어졌을 때 변수 \(\mu\)를 가지는 확률 밀도 함수의 로그 값을 최대로 하는 \(\mu\)를 구하는 방법이다[1].
+\(\hat \mu = \text{arg max}_\mu l_x (\mu)\)
+여기에서 \(l_x (\mu) = \log f_{\mu} (x)\)이고, \(f_{\mu} (x)\)는 확률 밀도이다.
+R에서 EstimationTools 패키지를 이용하여 최대 우도를 추정할 수 있다. 이 글에서는 컴퓨터 시대의 통계적 추론 책의 그림 4.1을 재현하면서 그 패키지의 사용 방법을 정리하기로 하겠다.</description>
+    </item>
+    
+    <item>
+      <title>계층적 선형 모형 - tidybayes 패키지를 이용한 베이즈 분석 입문</title>
+      <link>https://danhojin.github.io/r-blog/2020/12/13/%EA%B3%84%EC%B8%B5%EC%A0%81-%EC%84%A0%ED%98%95-%EB%AA%A8%ED%98%95-tidybayes/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/12/13/%EA%B3%84%EC%B8%B5%EC%A0%81-%EC%84%A0%ED%98%95-%EB%AA%A8%ED%98%95-tidybayes/</guid>
+      <description>계층적 선형 모형 계층적 선형 모형(multilevel/hierarchical linear model, HLM)은 선형 혼합 모형(linear mixed model)과 같은 수학적 전개에서 나오며 문제를 보는 관점에 따라 다르게 부른다[1]. 혼합 모형에서는 변량 인자(random factor)를 다루는데 그 효과에 대해서는 크게 관심이 없을 수 있다[2]. 계층 모형에서는 변량 인자들 사이에 포함관계가 있다고 보는 것이다. 예를 들어 어떤 학생은 학급에, 그 학급은 학교에, 그 학교는 소속 지역의 영향을 받는다고 볼 수 있다. 이런 가설은 일면 자연스럽게 보이나 통계적인 모델 수립과 그 모수를 추정하고 추론하는 것은 쉽지 않다.</description>
+    </item>
+    
     <item>
       <title>다구치 방법으로 회로 간 최적 결합 탐색</title>
       <link>https://danhojin.github.io/r-blog/2020/11/29/%EB%8B%A4%EA%B5%AC%EC%B9%98-%ED%9A%8C%EB%A1%9C-%EA%B2%B0%ED%95%A9/</link>

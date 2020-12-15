@@ -1,0 +1,274 @@
+---
+title: 계층적 선형 모형 - tidybayes 패키지를 이용한 베이즈 분석 입문
+author: '단호진'
+date: '2020-12-13'
+slug: 계층적-선형-모형-tidybayes
+categories: []
+tags:
+  - hierarchical linear model
+  - multilevel model
+  - mixed model
+  - HLM
+  - stan
+  - tidybayes
+  - brms
+  - bayesian regression
+---
+
+# 계층적 선형 모형
+
+계층적 선형 모형(multilevel/hierarchical linear model, HLM)은 선형 혼합 모형(linear mixed model)과 같은 수학적 전개에서 나오며 문제를 보는 관점에 따라 다르게 부른다[1]. 혼합 모형에서는 변량 인자(random factor)를 다루는데 그 효과에 대해서는 크게 관심이 없을 수 있다[2]. 계층 모형에서는 변량 인자들 사이에 포함관계가 있다고 보는 것이다. 예를 들어 어떤 학생은 학급에, 그 학급은 학교에, 그 학교는 소속 지역의 영향을 받는다고 볼 수 있다. 이런 가설은 일면 자연스럽게 보이나 통계적인 모델 수립과 그 모수를 추정하고 추론하는 것은 쉽지 않다. 특히 분산 특성에 대한 제약을 완화시켜 모델을 수립할 경우 베이즈 접근이 더 용이하다. 베이즈 접근을 위한 R 패키지가 많이 있는데, tidybayes 패키지는 베이즈 분석에서 많이 사용하는 패키지나 표준적인 분석 절차를 깔끔하게(tidy) 처리할 수 있도록 통합적인 환경을 제공한다. 이 글을 통하여 그 일면을 살펴보겠다.
+
+데이터를 포함하여 해석 절차까지 tidybayes 패키지의 튜토리얼을 많이 참고하였다[3]. 더 자세한 내용은 원 튜토리얼을 참고하기 바란다.
+
+# 데이터
+
+A에서 E까지 5개의 condition 처리에 따라 response 응답이 나온 인공 데이터를 다룬다. 단, 처리에 상관없이 동일 분산 특성을 적용한 데이터로 베이즈 접근이 반드시 유리한 데이터는 아니다.
+
+```{r, message=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(tidybayes)
+library(rstan)
+library(brms)
+library(lme4)
+
+theme_set(theme_tidybayes())
+options(mc.cores = parallel::detectCores())
+
+set.seed(5)
+n <- 10
+n_condition <- 5
+ABC <- tibble(
+  condition = rep(c("A","B","C","D","E"), n),
+  response = rnorm(n * 5, c(0,1,2,1,-1), 0.5)
+) %>%
+  mutate(condition = factor(condition))
+
+ABC %>%
+  ggplot(aes(x = response, y = fct_rev(condition))) +
+  geom_point(alpha = 0.5) +
+  ylab("condition")
+```
+
+# 모델
+
+이 절에서는 이 데이터에 대하여 단순 회귀부터 tidybayes 프레임 내 brms, stan을 통한 베이즈 접근까지 여러 방법을 정리해 보겠다. 각 방법의 수행 방법을 정리하기 위해서며 방법 간의 장단점을 논하지는 않겠다. 
+
+## 선형 회귀: lm
+
+lm 함수를 사용하면 기본적인 factor 처리를 내부적으로 해 주므로 손쉽게 적합해 볼 수 있다. 대비(contrast) 개념을 알아야 결과 해석을 할 수 있다.
+
+```{r}
+contrasts(ABC$condition)
+```
+
+A를 기준으로 각 처리가 얼마나 떨어져 있는지 분석할 수 있다. lm 적합 후 A는 Intercept 항으로 추정된다.
+
+
+```{r}
+fit_lm_basic <- lm(response ~ ., data = ABC)
+summary(fit_lm_basic)
+```
+```{r}
+coefs <- coef(fit_lm_basic)
+(coefs + coefs[1])[-1]
+```
+처치 결과가 모분포를 잘 추적하였다.모 분포의 분산은 Residual standard error 항에서 추정할 수 있다.
+
+
+
+## 선형 회귀: tidymodels 분석 절차를 따른 lm
+
+특성 변수가 많고, 전처리도 필요하며 튜닝이 필요한 모델을 사용한다면 조직적인 접근이 필요하다. tidymodels 패키지는 현명한 선택이 된다. 다음은 tidymodels 패키지의 기본 적합 절차는 다음과 같다. 
+
+```{r}
+mod_lm <- linear_reg() %>%
+  set_engine("lm")
+
+rec <- recipe(response ~ ., data = ABC) %>%
+  step_dummy(condition)
+
+wf <- workflow() %>%
+  add_model(mod_lm) %>%
+  add_recipe(rec)
+
+fit_lm <- wf %>%
+  fit(data = ABC)
+
+fit_lm %>%
+  pull_workflow_fit() %>%
+  tidy()
+```
+결과는 lm의 결과와 같고 내부에 그 적합 결과를 가지고 있다.
+
+```{r}
+summary(pull_workflow_fit(fit_lm)$fit)
+```
+
+
+## 혼합 모형: lme4
+
+임의 효과와 고정 효과에 대하여 명시적인 모형을 세울 수 있다. lme4에 대해서는 이전 포스트를 참고하자[2]. 
+
+
+```{r}
+fit_lme4 <- lmer(response ~ 1 + (1|condition), data = ABC)
+summary(fit_lme4)
+```
+
+고정 효과는 Fixed effects의 (Intercept)에서 알아볼 수 있다. 이 표준 오차에 대하여 추가적인 추정이 가능하다. 
+
+## 베이즈 계층 모형: brms
+
+lme4에서 사용하는 모형 식을 그대로 사용하면서 베이즈 분석을 진행할 수 있다. 아래는 사전 분포는 tidybayes 문석을 참고하였다[4].
+
+```{r}
+fit_brms <- brm(response ~ 1 + (1|condition),
+                data = ABC,
+                prior = c(
+                  prior(normal(0, 1), class = Intercept),
+                  prior(student_t(3, 0, 1), class = sd),
+                  prior(student_t(3, 0, 1), class = sigma)
+                  ),
+                warmup = 1000, iter = 3000,
+                seed = 952)
+
+summary(fit_brms)
+```
+
+### tidybayes::get_variables
+
+get_variables 함수로 적합된 베이즈 모형의 변수를 가져올 수 있다.
+
+```{r}
+get_variables(fit_brms)
+```
+
+### tidybayes::gather_draws, median_qi
+
+gather_draws 함수로 타이디 형식으로 데이터를 추출하고 median_qi 함수로 요약할 수 있다.
+
+```{r}
+# point summaries and intervals
+
+fit_brms %>%
+  gather_draws(b_Intercept, sigma) %>%
+  median_qi()
+```
+
+
+```{r}
+fit_brms %>%
+  spread_draws(r_condition[condition,]) %>%
+  median_qi()
+```
+
+그리고, 적합 결과를 효과적으로 도시할 수 있다.
+
+```{r}
+fit_brms %>%
+  spread_draws(b_Intercept, r_condition[condition,]) %>%
+  mutate(condition_mean = b_Intercept + r_condition) %>%
+  ggplot(aes(y = condition, x = condition_mean)) +
+  stat_halfeye()
+```
+
+### tidybayes::add_fitted_draws
+
+적합 후 사후 분포에서 표본 추출을 쉽게 할 수 있다.
+
+```{r}
+ABC %>%
+  modelr::data_grid(condition) %>%
+  add_fitted_draws(fit_brms) %>%
+  ggplot(aes(x = .value, y = condition)) +
+  stat_pointinterval() +
+  xlab("condition")
+```
+
+## 혼합 모형: stan
+
+### tidybayes::compose_data
+
+stan 적합 시 데이터 전달이 쉬워진다. 
+
+```{r}
+mod_stan_code <- "
+data {
+  int<lower=1> n;
+  int<lower=1> n_condition;
+  int<lower=1, upper=n_condition> condition[n];
+  real response[n];
+}
+parameters {
+  real overall_mean;
+  vector[n_condition] condition_zoffset;
+  real<lower=0> response_sd;
+  real<lower=0> condition_mean_sd;
+}
+transformed parameters {
+  vector[n_condition] condition_mean;
+  condition_mean = overall_mean + condition_zoffset * condition_mean_sd;
+}
+model {
+  response_sd ~ cauchy(0, 1);
+  condition_mean_sd ~ cauchy(0, 1);
+  overall_mean ~ normal(0, 1);
+  condition_zoffset ~ normal(0, 1);
+  for (i in 1:n) {
+    response[i] ~ normal(condition_mean[condition[i]], response_sd);
+  }
+}
+"
+
+mod_stan <- stan_model(model_code = mod_stan_code)
+fit_stan <- sampling(mod_stan, data = compose_data(ABC), control = list(adapt_delta = 0.99))
+
+# summary(fit_1)
+fit_stan <- recover_types(fit_stan, ABC)
+print(fit_stan, pars = c("overall_mean", "condition_mean_sd", "condition_mean", "response_sd"))
+```
+
+```{r}
+get_variables(fit_stan)
+```
+
+```{r}
+fit_stan %>%
+  spread_draws(condition_mean[condition]) %>%
+  median_qi()
+```
+
+```{r}
+fit_stan %>%
+  spread_draws(condition_mean[condition]) %>%
+  ggplot(aes(y = fct_rev(condition), x = condition_mean)) +
+  stat_halfeye() +
+  ylab("condition")
+```
+
+stan 코드를 직접 작성해서 베이즈 분석을 진행하면 add_fitted_draws를 이용할 수 없고, 직접 추출을 해야 한다. 타이디 데이터이므로 쉽게 진행할 수 있다.
+
+```{r}
+fit_stan %>%
+  spread_draws(condition_mean[condition], response_sd) %>%
+  mutate(y_rep = rnorm(n(), condition_mean, response_sd)) %>%
+  ggplot(aes(y = fct_rev(condition), x = y_rep)) +
+  stat_slab() +
+  xlab("response") +
+  ylab("condition") +
+  ggtitle("Posterior prediction")
+```
+
+# 맺으며
+
+혼합 혹은 계층 모형을 간략하게 살펴보고, tidybayes 패키지에서 제공하는 중요한 함수 몇가지를 이용하여 분석을 진행하였다. 실제 문제에서 베이즈 분석을 하고자 하면 tidybayes 패키지가 크게 도움이 될 것이다. 
+
+
+# 참고
+
+1. Karen Grace-Martin, https://www.theanalysisfactor.com/multilevel-hierarchical-mixed-models-terminology/
+2. 단호진, https://danhojin.github.io/r-blog/2020/11/09/선형-혼합-모형-소개/
+3. tidybayes get started, http://mjskay.github.io/tidybayes/articles/tidybayes.html
+4. tidybayes article, http://mjskay.github.io/tidybayes/articles/tidy-brms.html

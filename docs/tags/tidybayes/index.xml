@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tidybayes on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/tidybayes/</link>
+    <description>Recent content in tidybayes on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/tidybayes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>계층적 선형 모형 - tidybayes 패키지를 이용한 베이즈 분석 입문</title>
+      <link>https://danhojin.github.io/r-blog/2020/12/13/%EA%B3%84%EC%B8%B5%EC%A0%81-%EC%84%A0%ED%98%95-%EB%AA%A8%ED%98%95-tidybayes/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/12/13/%EA%B3%84%EC%B8%B5%EC%A0%81-%EC%84%A0%ED%98%95-%EB%AA%A8%ED%98%95-tidybayes/</guid>
+      <description>계층적 선형 모형 계층적 선형 모형(multilevel/hierarchical linear model, HLM)은 선형 혼합 모형(linear mixed model)과 같은 수학적 전개에서 나오며 문제를 보는 관점에 따라 다르게 부른다[1]. 혼합 모형에서는 변량 인자(random factor)를 다루는데 그 효과에 대해서는 크게 관심이 없을 수 있다[2]. 계층 모형에서는 변량 인자들 사이에 포함관계가 있다고 보는 것이다. 예를 들어 어떤 학생은 학급에, 그 학급은 학교에, 그 학교는 소속 지역의 영향을 받는다고 볼 수 있다. 이런 가설은 일면 자연스럽게 보이나 통계적인 모델 수립과 그 모수를 추정하고 추론하는 것은 쉽지 않다.</description>
+    </item>
+    
+  </channel>
+</rss>

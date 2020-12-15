@@ -6,7 +6,115 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Sun, 29 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EstimationTools</title>
+      <link>https://danhojin.github.io/r-blog/tags/estimationtools/</link>
+      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/estimationtools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>maximum likelihood estimation</title>
+      <link>https://danhojin.github.io/r-blog/tags/maximum-likelihood-estimation/</link>
+      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/maximum-likelihood-estimation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>maxlogL</title>
+      <link>https://danhojin.github.io/r-blog/tags/maxlogl/</link>
+      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/maxlogl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MLE</title>
+      <link>https://danhojin.github.io/r-blog/tags/mle/</link>
+      <pubDate>Mon, 14 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/mle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bayesian regression</title>
+      <link>https://danhojin.github.io/r-blog/tags/bayesian-regression/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/bayesian-regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>brms</title>
+      <link>https://danhojin.github.io/r-blog/tags/brms/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/brms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hierarchical linear model</title>
+      <link>https://danhojin.github.io/r-blog/tags/hierarchical-linear-model/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/hierarchical-linear-model/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HLM</title>
+      <link>https://danhojin.github.io/r-blog/tags/hlm/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/hlm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mixed model</title>
+      <link>https://danhojin.github.io/r-blog/tags/mixed-model/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/mixed-model/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>multilevel model</title>
+      <link>https://danhojin.github.io/r-blog/tags/multilevel-model/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/multilevel-model/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>stan</title>
+      <link>https://danhojin.github.io/r-blog/tags/stan/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/stan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidybayes</title>
+      <link>https://danhojin.github.io/r-blog/tags/tidybayes/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/tidybayes/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>robust design</title>
       <link>https://danhojin.github.io/r-blog/tags/robust-design/</link>
