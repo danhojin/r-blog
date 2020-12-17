@@ -6,7 +6,43 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Mon, 14 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>london bombs</title>
+      <link>https://danhojin.github.io/r-blog/tags/london-bombs/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/london-bombs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>poisson distribution</title>
+      <link>https://danhojin.github.io/r-blog/tags/poisson-distribution/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/poisson-distribution/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>런던 폭격</title>
+      <link>https://danhojin.github.io/r-blog/tags/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>포아송 분포</title>
+      <link>https://danhojin.github.io/r-blog/tags/%ED%8F%AC%EC%95%84%EC%86%A1-%EB%B6%84%ED%8F%AC/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/%ED%8F%AC%EC%95%84%EC%86%A1-%EB%B6%84%ED%8F%AC/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>EstimationTools</title>
       <link>https://danhojin.github.io/r-blog/tags/estimationtools/</link>

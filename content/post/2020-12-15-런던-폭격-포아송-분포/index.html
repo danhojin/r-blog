@@ -1,0 +1,128 @@
+---
+title: 런던 폭격 - 포아송 분포
+author: ''
+date: '2020-12-15'
+slug: 런던-폭격-포아송-분포
+categories: []
+tags:
+  - london bombs
+  - 런던 폭격
+  - poisson distribution
+  - 포아송 분포
+---
+
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="v-1-비행-폭탄" class="section level1">
+<h1>V-1 비행 폭탄</h1>
+<p>V-1 비행 폭탄은 제2차 세계 대전에서 나치독일이 개발한 무기이다. 현대 순항 미사일의 효시로 항법 장치가 빈약하여 정밀 타격을 기대하기 어려웠지만, 여러모로 가성비 있는 로켓이었다[1]. 1944년 6월부터 9개월동안 2300개의 비행 폭탄이 런던에 떨어졌고 5500명 이상의 사망자가 발생하였다[2].</p>
+</div>
+<div id="런던-v-1-타격-데이터와-포와송-분포" class="section level1">
+<h1>런던 V-1 타격 데이터와 포와송 분포</h1>
+<p>교과서적으로 포아송 분포 사례로 언급되는 폭격 Clarke의 데이터는 그가 사용한 폭격 지도을 얻을 수 없기 때문에 재현이 힘들었다. 두 명의 Shaw는 Clarke의 분석 결과를 재현하기 위하여 2015년도에 재 출판된 지도 표시 데이터에서 표본을 추출하여 분석을 수행하였다. 단위 지역 당 V-1 타격 수는 Clarke의 경우 <span class="math inline">\(\lambda = 537 / 576 = 0.932\)</span>이고 Shaw의 경우 <span class="math inline">\(\lambda = 532 / 576 = 0.923\)</span>이다.</p>
+<pre class="r"><code>library(tidyverse)
+
+london &lt;- tibble(hits = c(&quot;0&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5 and over&quot;),
+                 clarke = c(229, 211, 93, 35, 7, 1),
+                 shaw = c(237, 189, 115, 28, 6, 1))
+
+lambda_clarke &lt;- 537 / 576
+lambda_shaw &lt;- 532 / 576
+
+london &lt;- london %&gt;%
+  mutate(i_hits = 0:5,
+         E_clarke = ifelse(i_hits &lt; 5,
+                          dpois(i_hits, lambda = lambda_clarke),
+                          1 - ppois(4, lambda_clarke)),
+         E_shaw = ifelse(i_hits &lt; 5,
+                         dpois(i_hits, lambda = lambda_shaw),
+                         1 - ppois(4, lambda_shaw)),
+         E_clarke = E_clarke * 576,
+         E_shaw = E_shaw * 576) %&gt;%
+  select(-i_hits) %&gt;%
+  relocate(hits, clarke, E_clarke, shaw, E_shaw)
+
+london</code></pre>
+<pre><code>## # A tibble: 6 x 5
+##   hits       clarke E_clarke  shaw E_shaw
+##   &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 0             229   227.     237 229.  
+## 2 1             211   211.     189 211.  
+## 3 2              93    98.5    115  97.6 
+## 4 3              35    30.6     28  30.0 
+## 5 4               7     7.14     6   6.94
+## 6 5 and over      1     1.57     1   1.51</code></pre>
+<pre class="r"><code>london %&gt;%
+  pivot_longer(cols = -hits) %&gt;%
+  mutate(author = ifelse(str_ends(name, &quot;clarke&quot;), &quot;Clarke&quot;, &quot;Shaw&quot;),
+         frequency = ifelse(str_starts(name, &quot;E&quot;), &quot;Expected&quot;, &quot;Observed&quot;),
+         frequency = fct_rev(frequency)) %&gt;%
+  ggplot(aes(x = hits, y = value, fill = frequency)) +
+  geom_bar(stat = &quot;identity&quot;, position = position_dodge2()) +
+  facet_wrap(~ author) +
+  ylab(&quot;count&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>관측 빈도와 포와송 기대 빈도는 Clarke 데이터는 정말 교과서적으로 맞고, Shaw 데이터도 어느 정도 일치한다. 카이제곱검점을 통하여 적합도를 판단해보자. 전체 빈도와 폭탄의 총 개수 두 개의 자유도를 사용하므로 그만큼 자유도를 잃게 된다. chisq.test 함수는 총 빈도에 대하여 하나의 자유도를 잃는다고 가정하므로 직접 사용할 수는 없지만 카이제곱 통계량 계산값은 활용할 수 있다.</p>
+<pre class="r"><code>ct_1 &lt;- with(london, chisq.test(x = clarke, p = E_clarke, rescale.p = TRUE))</code></pre>
+<pre><code>## Warning in chisq.test(x = clarke, p = E_clarke, rescale.p = TRUE): Chi-squared
+## approximation may be incorrect</code></pre>
+<pre class="r"><code>ct_2 &lt;- with(london, chisq.test(x = shaw, p = E_shaw, rescale.p = TRUE))</code></pre>
+<pre><code>## Warning in chisq.test(x = shaw, p = E_shaw, rescale.p = TRUE): Chi-squared
+## approximation may be incorrect</code></pre>
+<pre class="r"><code>p_clarke &lt;- 1 - pchisq(ct_1$statistic, 4)
+p_shaw &lt;- 1 - pchisq(ct_2$statistic, 4)
+
+p &lt;- c(p_clarke, p_shaw)
+names(p) &lt;- c(&quot;Clarke&quot;, &quot;Shaw&quot;)
+print(p)</code></pre>
+<pre><code>##    Clarke      Shaw 
+## 0.8831505 0.1849099</code></pre>
+<p>Shaw의 분석도 Clarke 데이터 만큼은 아니지만 포아송 분포 적합을 기각할 수는 없다. 다만, Shaw는 자신 데이터가 포아송 기대 분포와 p=0.70라고 제시하여 이 포스트의 계산값 p=0.18과 차이가 난다.</p>
+</div>
+<div id="랜덤-타격" class="section level1">
+<h1>랜덤 타격</h1>
+<p>Clarke의 데이터를 기준으로 폭탄 537개가 576구역 위에 무작위로 떨어졌다고 보자.</p>
+<pre class="r"><code>set.seed(952)
+
+bombs &lt;- tibble(id = sample(576, size = 537, replace = TRUE)) %&gt;%
+  group_by(id) %&gt;%
+  count() %&gt;%
+  group_by(n) %&gt;%
+  count() %&gt;%
+  rename(i_hits = n) %&gt;%
+  rename(rnd = nn) %&gt;%
+  ungroup()</code></pre>
+<pre><code>## Storing counts in `nn`, as `n` already present in input
+## ℹ Use `name = &quot;new_name&quot;` to pick a new name.</code></pre>
+<pre class="r"><code>bombs &lt;- bombs %&gt;%
+  add_row(i_hits = 0, rnd = 576 - bombs %&gt;% summarise(sum(rnd)) %&gt;% pull()) %&gt;%
+  arrange(i_hits)
+
+london %&gt;%
+  mutate(i_hits = 0:5) %&gt;%
+  left_join(bombs) %&gt;%
+  select(hits, clarke, E_clarke, rnd) %&gt;%
+  pivot_longer(cols = -hits, names_to = &quot;frequency&quot;) %&gt;%
+  ggplot(aes(y = value, x = hits, fill  = frequency)) +
+  geom_bar(stat = &quot;identity&quot;, position = position_dodge2())</code></pre>
+<pre><code>## Joining, by = &quot;i_hits&quot;</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>이 시뮬레이션 결과는 하나의 격자가 <span class="math inline">\(p = 1/576 = 0.00173\)</span>의 확률로 피격당할 때 폭탄의 수 <span class="math inline">\(n=537\)</span>개가 떨어지는 이항 분포를 따른다는 것을 알 수 있다. <span class="math inline">\(p \ll 1\)</span>이므로 이항 분포의 평균 <span class="math inline">\(np = lambda = 0.932\)</span>을 이용하여 포와송 분포로 근사할 수 있다는 것도 확인하였다.</p>
+</div>
+<div id="맺으며" class="section level1">
+<h1>맺으며</h1>
+<p>당시 런던 남부에 살고 있는 평범한 시민에게는, 탄착군이 형성되지 않고 다음 폭탄이 어디에 떨어질 지 모르는 비행 폭탄의 존재는 공포였을 것이다. 특히 V-1 엔진에서 나는 웅웅 거리는 특유의 소리가 내 머리 근처에서 멈추지 않길 숨죽였을 것이다. 폭격 와중에도 피해 상황을 수집·분석하고 스파이에게 오정보를 흘리는 공작을 수행했을 당시 사람들에게 경의를 표한다.</p>
+</div>
+<div id="참고" class="section level1">
+<h1>참고</h1>
+<ol style="list-style-type: decimal">
+<li>나무위키 <a href="https://namu.wiki/w/V1(로켓)" class="uri">https://namu.wiki/w/V1(로켓)</a></li>
+<li>R. D. Clarke, An application of the poisson distribution, JIA, 1946</li>
+<li>Liam P. Shaw, Luke F. Shaw, The flying bomb and the actuary, significancemagazine.com, <a href="https://rss.onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1740-9713.2019.01315.x" class="uri">https://rss.onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1740-9713.2019.01315.x</a>, 2019</li>
+<li>Gabriel Butler, ECON 41 Labs,
+<a href="https://bookdown.org/gabriel_butler/ECON41Labs/tutorial-5-the-poisson-distribution.html#bomb-hits-over-london-during-world-war-2" class="uri">https://bookdown.org/gabriel_butler/ECON41Labs/tutorial-5-the-poisson-distribution.html#bomb-hits-over-london-during-world-war-2</a></li>
+</ol>
+</div>

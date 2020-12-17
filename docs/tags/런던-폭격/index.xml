@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>런던 폭격 on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9/</link>
+    <description>Recent content in 런던 폭격 on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Tue, 15 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>런던 폭격 - 포아송 분포</title>
+      <link>https://danhojin.github.io/r-blog/2020/12/15/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9-%ED%8F%AC%EC%95%84%EC%86%A1-%EB%B6%84%ED%8F%AC/</link>
+      <pubDate>Tue, 15 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2020/12/15/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9-%ED%8F%AC%EC%95%84%EC%86%A1-%EB%B6%84%ED%8F%AC/</guid>
+      <description>V-1 비행 폭탄 V-1 비행 폭탄은 제2차 세계 대전에서 나치독일이 개발한 무기이다. 현대 순항 미사일의 효시로 항법 장치가 빈약하여 정밀 타격을 기대하기 어려웠지만, 여러모로 가성비 있는 로켓이었다[1]. 1944년 6월부터 9개월동안 2300개의 비행 폭탄이 런던에 떨어졌고 5500명 이상의 사망자가 발생하였다[2].
+ 런던 V-1 타격 데이터와 포와송 분포 교과서적으로 포아송 분포 사례로 언급되는 폭격 Clarke의 데이터는 그가 사용한 폭격 지도을 얻을 수 없기 때문에 재현이 힘들었다. 두 명의 Shaw는 Clarke의 분석 결과를 재현하기 위하여 2015년도에 재 출판된 지도 표시 데이터에서 표본을 추출하여 분석을 수행하였다.</description>
+    </item>
+    
+  </channel>
+</rss>
