@@ -1,0 +1,246 @@
+---
+title: 용해도 데이터에 대한 신경망 회귀
+author: 단호진
+date: '2020-12-22'
+slug: 용해도-신경망-회귀
+categories: []
+tags:
+  - neural network in R
+  - nnet
+  - tidymodels
+---
+
+<script src="index_files/header-attrs/header-attrs.js"></script>
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="tidymodels-프레임-내-신경망-회귀" class="section level1">
+<h1>tidymodels 프레임 내 신경망 회귀</h1>
+<p>tidymodels 프레임은 tensorflow/keras와 nnet 패키지에 대한 인터페이스를 제공한다. 회귀나 분류 문제를 수행할 수 있으나 제한적인 신경망만 구성할 수 있다. 이 포스트에서는 은닉층이 하나만 존재하는 완전 연결 신경망을 구성하고 K-겹 교차 검증를 이용하여 신경망 튜닝을 수행해 보겠다. 데이터 전처리, 튜닝 변수를 가진 모델 정의, 튜닝 격자 정의, 적합 수행 및 결과 정리, 마지막으로 최적 튜닝 값을 이용하여 검증 데이터에 적용해 보겠다.</p>
+<p>용해도 데이터의 회귀 분석에 대하여 이전 포스트 <a href="https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/">tidymodels 프레임 내 회귀 분석 기본</a> 문서를 참고하자. tidymodels 프레임에서 신경망 이용은 아직 제한적이므로 이 포스트는 튜닝 절차를 정리하는데 초점을 맞추겠다.</p>
+</div>
+<div id="데이터" class="section level1">
+<h1>데이터</h1>
+<pre class="r"><code>library(tidyverse)
+library(tidymodels)
+library(AppliedPredictiveModeling)
+
+data(solubility)
+
+ls(pattern = &quot;^sol&quot;)</code></pre>
+<pre><code>## [1] &quot;solTestX&quot;       &quot;solTestXtrans&quot;  &quot;solTestY&quot;       &quot;solTrainX&quot;     
+## [5] &quot;solTrainXtrans&quot; &quot;solTrainY&quot;</code></pre>
+<p>BoxCox가 적용된 데이터는 접미사 trans가 붙어있다. 특징 변수와 응답 변수를 하나의 데이터 프레임에 담아서 진행하자.</p>
+<pre class="r"><code>sol_train &lt;- as_tibble(solTrainXtrans) %&gt;%
+  mutate(sol = solTrainY) %&gt;%
+  relocate(sol)
+
+sol_test &lt;- as_tibble(solTestXtrans) %&gt;%
+  mutate(sol = solTestY) %&gt;%
+  relocate(sol)</code></pre>
+</div>
+<div id="전처리" class="section level1">
+<h1>전처리</h1>
+<p>BoxCox가 이미 적용된 데이터로, 추가적으로 상관성이 높은 특징 변수를 제거하고 표준화를 진행한다.</p>
+<pre class="r"><code>sol_rec &lt;- recipe(sol ~ ., data = sol_train) %&gt;%
+  step_corr(all_predictors(), threshold = 0.9) %&gt;%
+  step_center(all_predictors()) %&gt;%
+  step_scale(all_predictors())
+
+sol_rec</code></pre>
+<pre><code>## Data Recipe
+## 
+## Inputs:
+## 
+##       role #variables
+##    outcome          1
+##  predictor        228
+## 
+## Operations:
+## 
+## Correlation filter on all_predictors()
+## Centering for all_predictors()
+## Scaling for all_predictors()</code></pre>
+</div>
+<div id="튜닝-변수와-격자-정의" class="section level1">
+<h1>튜닝 변수와 격자 정의</h1>
+<p>신경망 튜닝을 위하여 은닉 층 유닛 수와 정규화 계수를 선택하였다. mlp 함수의 전달인자로 입력할 수 있고, dials 패키지에도 정의되어 간편하게 튜닝 격자를 생성할 수 있다.</p>
+<pre class="r"><code>sol_spec &lt;-
+  mlp(epochs = 100,
+      hidden_units = tune(),
+      penalty = tune()) %&gt;%
+  set_mode(&quot;regression&quot;) %&gt;%
+  set_engine(&quot;nnet&quot;, verbose = 1, MaxNWts = 10000)
+
+sol_spec</code></pre>
+<pre><code>## Single Layer Neural Network Specification (regression)
+## 
+## Main Arguments:
+##   hidden_units = tune()
+##   penalty = tune()
+##   epochs = 100
+## 
+## Engine-Specific Arguments:
+##   verbose = 1
+##   MaxNWts = 10000
+## 
+## Computational engine: nnet</code></pre>
+<p>튜닝 격자에 penalty = 0.3 항을 수동으로 추가해 주었다.</p>
+<pre class="r"><code>sol_grid &lt;- grid_regular(
+  hidden_units(range = c(5, 20)),
+  penalty(range = c(-2, 0)),
+  levels = c(hidden_units = 5, penalty = 3)
+)
+
+sol_grid &lt;- sol_grid %&gt;%
+  add_row(sol_grid %&gt;% filter(penalty == 0.01) %&gt;% mutate(penalty = 0.3))
+
+sol_grid %&gt;% head()</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   hidden_units penalty
+##          &lt;int&gt;   &lt;dbl&gt;
+## 1            5    0.01
+## 2            8    0.01
+## 3           12    0.01
+## 4           16    0.01
+## 5           20    0.01
+## 6            5    0.1</code></pre>
+</div>
+<div id="k-겹-데이터" class="section level1">
+<h1>K-겹 데이터</h1>
+<pre class="r"><code>set.seed(123)
+sol_folds &lt;- vfold_cv(sol_train, v = 5)</code></pre>
+</div>
+<div id="튜닝-격자-탐색" class="section level1">
+<h1>튜닝 격자 탐색</h1>
+<p>지금까지 만들어온 전처리 및 튜닝 모델을 workflow에 설정하여 튜닝 격자를 탐색한다. 결과는 collect_metrics 함수로 정리할 수 있다.</p>
+<pre class="r"><code>sol_wf &lt;- workflow() %&gt;%
+  add_model(sol_spec) %&gt;%
+  add_recipe(sol_rec)
+
+sol_res &lt;- sol_wf %&gt;%
+  tune_grid(
+    resamples = sol_folds,
+    grid = sol_grid
+  )</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rlang&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,
+##     flatten_lgl, flatten_raw, invoke, list_along, modify, prepend,
+##     splice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;vctrs&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     data_frame</code></pre>
+<pre><code>## The following object is masked from &#39;package:tibble&#39;:
+## 
+##     data_frame</code></pre>
+<pre class="r"><code>sol_res %&gt;%
+  collect_metrics() %&gt;%
+  head()</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   hidden_units penalty .metric .estimator  mean     n std_err .config           
+##          &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;             
+## 1            5    0.01 rmse    standard   1.11      5  0.0524 Preprocessor1_Mod…
+## 2            5    0.01 rsq     standard   0.729     5  0.0234 Preprocessor1_Mod…
+## 3            8    0.01 rmse    standard   1.09      5  0.0717 Preprocessor1_Mod…
+## 4            8    0.01 rsq     standard   0.753     5  0.0283 Preprocessor1_Mod…
+## 5           12    0.01 rmse    standard   1.21      5  0.0914 Preprocessor1_Mod…
+## 6           12    0.01 rsq     standard   0.711     5  0.0310 Preprocessor1_Mod…</code></pre>
+<pre class="r"><code>sol_res %&gt;%
+  collect_metrics() %&gt;%
+  mutate(penalty = factor(penalty)) %&gt;%
+  ggplot(aes(x = hidden_units, y = mean, color = penalty)) +
+  geom_line() +
+  geom_point() +
+  # scale_x_continuous(trans = &quot;log10&quot;) +
+  facet_wrap(~ .metric, scales = &quot;free&quot;, nrow = 2)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="상위-5-적합" class="section level1">
+<h1>상위 5 적합</h1>
+<pre class="r"><code>sol_res %&gt;%
+  show_best(&quot;rmse&quot;)</code></pre>
+<pre><code>## # A tibble: 5 x 8
+##   hidden_units penalty .metric .estimator  mean     n std_err .config           
+##          &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;             
+## 1            8     1   rmse    standard   0.780     5  0.0313 Preprocessor1_Mod…
+## 2           20     0.3 rmse    standard   0.823     5  0.0352 Preprocessor1_Mod…
+## 3            5     1   rmse    standard   0.831     5  0.0305 Preprocessor1_Mod…
+## 4           20     0.1 rmse    standard   0.843     5  0.0170 Preprocessor1_Mod…
+## 5           16     1   rmse    standard   0.843     5  0.0483 Preprocessor1_Mod…</code></pre>
+</div>
+<div id="최우선-적합-및-검증" class="section level1">
+<h1>최우선 적합 및 검증</h1>
+<pre class="r"><code>sol_best &lt;- sol_res %&gt;%
+  select_best(&quot;rmse&quot;)
+
+sol_best</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   hidden_units penalty .config              
+##          &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;                
+## 1            8       1 Preprocessor1_Model12</code></pre>
+<p>최우선 적합 결과에 대한 workflow를 정리하였다.</p>
+<pre class="r"><code>sol_wf_best &lt;- sol_wf %&gt;% finalize_workflow(sol_best)
+
+sol_wf_best</code></pre>
+<pre><code>## ══ Workflow ════════════════════════════════════════════════════════════════════
+## Preprocessor: Recipe
+## Model: mlp()
+## 
+## ── Preprocessor ────────────────────────────────────────────────────────────────
+## 3 Recipe Steps
+## 
+## ● step_corr()
+## ● step_center()
+## ● step_scale()
+## 
+## ── Model ───────────────────────────────────────────────────────────────────────
+## Single Layer Neural Network Specification (regression)
+## 
+## Main Arguments:
+##   hidden_units = 8
+##   penalty = 1
+##   epochs = 100
+## 
+## Engine-Specific Arguments:
+##   verbose = 1
+##   MaxNWts = 10000
+## 
+## Computational engine: nnet</code></pre>
+<p>마지막으로 훈련셋 전체에 대하여 적합을 진행한다.</p>
+<pre class="r"><code>sol_fit &lt;- sol_wf_best %&gt;% fit(sol_train)
+
+pred_test &lt;- predict(sol_fit, new_data = sol_test) %&gt;%
+  bind_cols(sol_test %&gt;% select(sol))
+
+
+pred_test %&gt;%
+  ggplot(aes(x = .pred, y = sol)) +
+  geom_point()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+최종적으로 검정셋의 결과를 살펴보았다. K-겹 교차 검증을 수행하여 튜닝을 했지만 검증셋 결과와는 성능 지표 상 차이를 보였다.</p>
+<pre class="r"><code>rmse(pred_test, sol, .pred) %&gt;%
+  add_row(rsq(pred_test, sol, .pred))</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.898
+## 2 rsq     standard       0.820</code></pre>
+</div>
+<div id="맺으며" class="section level1">
+<h1>맺으며</h1>
+<p>tidymodels 패키지를 사용할 때 교차 검증과 모델 튜닝 방법을 살펴보았다. 신경망의 모델이 커지고 데이터가 많은 경우 K-겹 교차 검증을 수행하면서 모델 튜닝을 하기에는 계산자원 한계로 쉽지 않다. 전체 분석 흐름이 잡히면 부분부분 원하는 방식으로 교체하여 분석을 진행할 수 있다. 가령 신경망 대신 트리 기반의 알고리즘을 적용해 볼 수도 있다. 향후에는 모델간 비교 방법의 절차를 살펴보기로 하겠다.</p>
+</div>
+<div id="참고" class="section level1">
+<h1>참고</h1>
+<ol style="list-style-type: decimal">
+<li>단호진 블로그, tidymodels 프레임 내 회귀 분석 기본, <a href="https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/" class="uri">https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/</a></li>
+<li>막스 쿤, 실전 예측 분석 모델링, 권정민 역, Springer/에이콘, 2018</li>
+<li>tidymodels tutorial, Tune model parameters, <a href="https://www.tidymodels.org/start/tuning/" class="uri">https://www.tidymodels.org/start/tuning/</a></li>
+</ol>
+</div>
