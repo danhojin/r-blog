@@ -1,0 +1,37 @@
+---
+title: "DF 단위근 검정 및 EG 공적분 검정"
+author: "단호진"
+date: '2021-09-08'
+slug: 단위근-공적분
+categories: []
+tags:
+- time series
+- unit root test
+- Dickey-Fuller test
+- Engle-Granger test
+- cointegration
+- spurious regression
+---
+
+
+```{r, include=FALSE}
+library(tidyverse)
+library(modelr)
+library(urca)
+library(egcm)
+```
+
+## Dickey-Fuller 단위근 검정
+
+순열 $\{ e_t \}$가 독립동일분포(iid)일 때  AR(1) 모델을 생각해보자. 
+
+$y_t = \alpha + \rho y_{t-1} + e_t$
+
+영가설은 순열 $\{ y_t \}$가 단위 근을 가졌다는 것이다. $H_0: \rho = 1$ 우리의 관심은 $H_1: \rho < 1$에 있다. 위 식의 양변에 $y_{t - 1}$을 빼고 새로운 파라미터 $\theta = \rho - 1$을 도입하면,
+
+$\Delta y_t = \alpha + \theta y_{t-1} + e_t$
+
+식으로 변경된다. 가설은 각각 $H_0: \theta = 0$과 $H_1: \theta < 0$이 된다. $\rho = 1$ 혹은 $\theta = 0$일 때 어떤 분포를 얻을 수 있는지 살펴보자.
+
+
+
