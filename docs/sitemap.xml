@@ -1,304 +1,205 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>https://danhojin.github.io/r-blog/</loc>
-    <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/cointegration/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/2021/09/08/%EB%8B%A8%EC%9C%84%EA%B7%BC-%EA%B3%B5%EC%A0%81%EB%B6%84/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/dickey-fuller-test/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/engle-granger-test/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/post/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/spurious-regression/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/time-series/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/unit-root-test/</loc>
+    <lastmod>2021-09-08T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/neural-network-in-r/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/nnet/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://danhojin.github.io/r-blog/post/</loc>
-    <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://danhojin.github.io/r-blog/tags/</loc>
-    <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/tidymodels/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/12/22/%EC%9A%A9%ED%95%B4%EB%8F%84-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%ED%9A%8C%EA%B7%80/</loc>
     <lastmod>2020-12-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/london-bombs/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/poisson-distribution/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/12/15/%EB%9F%B0%EB%8D%98-%ED%8F%AD%EA%B2%A9-%ED%8F%AC%EC%95%84%EC%86%A1-%EB%B6%84%ED%8F%AC/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/%ED%8F%AC%EC%95%84%EC%86%A1-%EB%B6%84%ED%8F%AC/</loc>
     <lastmod>2020-12-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/estimationtools/</loc>
     <lastmod>2020-12-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/12/14/maxlogl-%EC%B5%9C%EB%8C%80-%EC%9A%B0%EB%8F%84/</loc>
     <lastmod>2020-12-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/maximum-likelihood-estimation/</loc>
     <lastmod>2020-12-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/maxlogl/</loc>
     <lastmod>2020-12-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/mle/</loc>
     <lastmod>2020-12-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/bayesian-regression/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/brms/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/hierarchical-linear-model/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/hlm/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/mixed-model/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/multilevel-model/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/stan/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/tidybayes/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/12/13/%EA%B3%84%EC%B8%B5%EC%A0%81-%EC%84%A0%ED%98%95-%EB%AA%A8%ED%98%95-tidybayes/</loc>
     <lastmod>2020-12-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/robust-design/</loc>
     <lastmod>2020-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/taguchi-method/</loc>
     <lastmod>2020-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/%EA%B0%95%EA%B1%B4-%EC%84%A4%EA%B3%84/</loc>
     <lastmod>2020-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/%EB%8B%A4%EA%B5%AC%EC%B9%98-%EB%B0%A9%EB%B2%95/</loc>
     <lastmod>2020-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/11/29/%EB%8B%A4%EA%B5%AC%EC%B9%98-%ED%9A%8C%EB%A1%9C-%EA%B2%B0%ED%95%A9/</loc>
     <lastmod>2020-11-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/partial-least-squares/</loc>
     <lastmod>2020-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/pca/</loc>
     <lastmod>2020-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/pls/</loc>
     <lastmod>2020-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/plsr/</loc>
     <lastmod>2020-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1/</loc>
     <lastmod>2020-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/11/20/%EB%B6%80%EB%B6%84-%EC%B5%9C%EC%86%8C-%EC%A0%9C%EA%B3%B1-pls-%EC%86%8C%EA%B0%9C/</loc>
     <lastmod>2020-11-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/glmnet/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/lasso-regression/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/random-forest/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/ranger/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/regression/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/11/19/intro-tidymodels-regression/</loc>
     <lastmod>2020-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/anova/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/glinternet/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/interaction-effects/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/lasso/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/11/14/%EA%B5%90%ED%98%B8-%EC%9E%91%EC%9A%A9-%EB%9D%BC%EC%86%8C-%ED%9A%8C%EA%B7%80-glinternet-%EC%86%8C%EA%B0%9C/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/linear-mixed-model/</loc>
     <lastmod>2020-11-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/lme4/</loc>
     <lastmod>2020-11-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/11/09/%EC%84%A0%ED%98%95-%ED%98%BC%ED%95%A9-%EB%AA%A8%ED%98%95-%EC%86%8C%EA%B0%9C/</loc>
     <lastmod>2020-11-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/aic/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/bic/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/f-test/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/linear-regression/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/lm/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/model-selection/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/2020/10/29/%EC%84%A0%ED%98%95-%ED%9A%8C%EA%B7%80-%EB%AA%A8%ED%98%95-%EB%B3%80%EC%88%98-f-%EA%B2%80%EC%A0%95/</loc>
     <lastmod>2020-10-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://danhojin.github.io/r-blog/categories/</loc>
   </url>
-  
 </urlset>

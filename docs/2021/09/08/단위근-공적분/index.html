@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<title>DF 단위근 검정 및 EG 공적분 검정 - A Hugo website</title>
+<meta property="og:title" content="DF 단위근 검정 및 EG 공적분 검정 - A Hugo website">
+
+
+  <link href='https://danhojin.github.io/r-blog/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/r-blog/css/fonts.css" media="all">
+<link rel="stylesheet" href="/r-blog/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/r-blog/" class="nav-logo">
+    <img src="/r-blog/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/r-blog/about/">About</a></li>
+    
+    <li><a href="https://github.com/danhojin">GitHub</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">DF 단위근 검정 및 EG 공적분 검정</h1>
+
+    
+    <span class="article-date">2021-09-08</span>
+    
+
+    <div class="article-content">
+      
+<script src="https://danhojin.github.io/r-blog/2021/09/08/%EB%8B%A8%EC%9C%84%EA%B7%BC-%EA%B3%B5%EC%A0%81%EB%B6%84/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="dickey-fuller-단위근-검정" class="section level2">
+<h2>Dickey-Fuller 단위근 검정</h2>
+<p>순열 <span class="math inline">\(\{ e_t \}\)</span>가 독립동일분포(iid)일 때 AR(1) 모델을 생각해보자.</p>
+<p><span class="math inline">\(y_t = \alpha + \rho y_{t-1} + e_t\)</span></p>
+<p>영가설은 순열 <span class="math inline">\(\{ y_t \}\)</span>가 단위 근을 가졌다는 것이다. <span class="math inline">\(H_0: \rho = 1\)</span> 우리의 관심은 <span class="math inline">\(H_1: \rho &lt; 1\)</span>에 있다. 위 식의 양변에 <span class="math inline">\(y_{t - 1}\)</span>을 빼고 새로운 파라미터 <span class="math inline">\(\theta = \rho - 1\)</span>을 도입하면,</p>
+<p><span class="math inline">\(\Delta y_t = \alpha + \theta y_{t-1} + e_t\)</span></p>
+<p>식으로 변경된다. 가설은 각각 <span class="math inline">\(H_0: \theta = 0\)</span>과 <span class="math inline">\(H_1: \theta &lt; 0\)</span>이 된다. <span class="math inline">\(\rho = 1\)</span> 혹은 <span class="math inline">\(\theta = 0\)</span>일 때 어떤 분포를 얻을 수 있는지 살펴보자.</p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/r-blog/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/r-blog/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+<script src="/r-blog/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

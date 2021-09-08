@@ -6,7 +6,20 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Tue, 22 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 08 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DF 단위근 검정 및 EG 공적분 검정</title>
+      <link>https://danhojin.github.io/r-blog/2021/09/08/%EB%8B%A8%EC%9C%84%EA%B7%BC-%EA%B3%B5%EC%A0%81%EB%B6%84/</link>
+      <pubDate>Wed, 08 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2021/09/08/%EB%8B%A8%EC%9C%84%EA%B7%BC-%EA%B3%B5%EC%A0%81%EB%B6%84/</guid>
+      <description>Dickey-Fuller 단위근 검정 순열 \(\{ e_t \}\)가 독립동일분포(iid)일 때 AR(1) 모델을 생각해보자.
+\(y_t = \alpha + \rho y_{t-1} + e_t\)
+영가설은 순열 \(\{ y_t \}\)가 단위 근을 가졌다는 것이다. \(H_0: \rho = 1\) 우리의 관심은 \(H_1: \rho &amp;lt; 1\)에 있다. 위 식의 양변에 \(y_{t - 1}\)을 빼고 새로운 파라미터 \(\theta = \rho - 1\)을 도입하면,
+\(\Delta y_t = \alpha + \theta y_{t-1} + e_t\)
+식으로 변경된다. 가설은 각각 \(H_0: \theta = 0\)과 \(H_1: \theta &amp;lt; 0\)이 된다.</description>
+    </item>
+    
     <item>
       <title>용해도 데이터에 대한 신경망 회귀</title>
       <link>https://danhojin.github.io/r-blog/2020/12/22/%EC%9A%A9%ED%95%B4%EB%8F%84-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%ED%9A%8C%EA%B7%80/</link>
