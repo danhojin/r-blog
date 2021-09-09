@@ -16,11 +16,95 @@ tags:
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<div id="단위근-검정과-공적분-검정" class="section level1">
+<h1>단위근 검정과 공적분 검정</h1>
+<p>시계열 데이터를 적당한 방법으로 적합한 후에는 잔차가 어떤 구조를 가지고 있는지 살펴봐야 한다. 제 1 조건으로 잔차가 터지지 말아야 한다는 것이다. 다음 AR(1) 모델을 살펴보자.</p>
+<p><span class="math inline">\(y_t = \alpha + \rho y_{t-1} + e_t\)</span></p>
+<div id="패키지-불러오기" class="section level3">
+<h3>패키지 불러오기</h3>
+<pre class="r"><code>library(tidyverse)
+library(tidymodels)
+library(modelr)
+library(urca)
+# library(egcm)</code></pre>
+<pre class="r"><code>dgp_ar1 &lt;- function(n, rho) {
+  eps &lt;- rnorm(n)
+  y &lt;- vector(&quot;numeric&quot;, n)
+  for(k in 2:n) {
+    y[k] &lt;- rho * y[k - 1] + eps[k]
+  }
+  y
+}
+
+set.seed(52)
+n &lt;- 100
+df &lt;- tibble(
+  # `0.5` = dgp_ar1(n, 0.5),
+  `0.8` = dgp_ar1(n, 0.8),
+  `1.0` = dgp_ar1(n, 1.0),
+  `1.02` = dgp_ar1(n, 1.02)
+) %&gt;%
+  mutate(
+    K = row_number() - 1
+  )
+df %&gt;%
+  pivot_longer(cols = -K, names_to = &quot;Rho&quot;, values_to = &quot;Y&quot;) %&gt;%
+  ggplot(aes(x = K, y = Y, color = Rho)) +
+  geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><span class="math inline">\(\rho = 1\)</span>인 AR(1)은 랜덤워크이며 이 지점을 단위근이라고 한다. 적당한 모델이 선정되어 데이터에 잘 적합되었다면 <span class="math inline">\(\rho &lt; 1\)</span> 관계가 될 것이다. 이 개념을 가지고, Dickey-Fuller 단위근 검정을 알아보겠다.</p>
+</div>
 <div id="dickey-fuller-단위근-검정" class="section level2">
 <h2>Dickey-Fuller 단위근 검정</h2>
 <p>순열 <span class="math inline">\(\{ e_t \}\)</span>가 독립동일분포(iid)일 때 AR(1) 모델을 생각해보자.</p>
 <p><span class="math inline">\(y_t = \alpha + \rho y_{t-1} + e_t\)</span></p>
 <p>영가설은 순열 <span class="math inline">\(\{ y_t \}\)</span>가 단위 근을 가졌다는 것이다. <span class="math inline">\(H_0: \rho = 1\)</span> 우리의 관심은 <span class="math inline">\(H_1: \rho &lt; 1\)</span>에 있다. 위 식의 양변에 <span class="math inline">\(y_{t - 1}\)</span>을 빼고 새로운 파라미터 <span class="math inline">\(\theta = \rho - 1\)</span>을 도입하면,</p>
 <p><span class="math inline">\(\Delta y_t = \alpha + \theta y_{t-1} + e_t\)</span></p>
-<p>식으로 변경된다. 가설은 각각 <span class="math inline">\(H_0: \theta = 0\)</span>과 <span class="math inline">\(H_1: \theta &lt; 0\)</span>이 된다. <span class="math inline">\(\rho = 1\)</span> 혹은 <span class="math inline">\(\theta = 0\)</span>일 때 어떤 분포를 얻을 수 있는지 살펴보자.</p>
+<p>식으로 변경된다. 가설은 각각 <span class="math inline">\(H_0: \theta = 0\)</span>과 <span class="math inline">\(H_1: \theta &lt; 0\)</span>이 된다. <span class="math inline">\(\rho = 1\)</span> 혹은 <span class="math inline">\(\theta = 0\)</span>일 때 어떤 분포를 나타나는지 살펴보자.</p>
+<pre class="r"><code>dgp_ar1_statistic &lt;- function(n) {
+  df &lt;- tibble(Eps = rnorm(n + 1)) %&gt;%
+    mutate(Y = cumsum(Eps),
+           Y_1 = lag(Y),
+           DY = Y - Y_1) %&gt;%
+    drop_na()
+  lm_mod &lt;- lm(DY ~ Y_1, data = df)
+  tidy(lm_mod)[[2, 4]]  # return t-statistic
+}</code></pre>
+<pre class="r"><code>t_df &lt;- tibble(statistic = rep(100, 1000) %&gt;% map_dbl(dgp_ar1_statistic))
+t_df %&gt;%
+  ggplot(aes(statistic)) +
+  geom_density()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>이것을 Dickey-Fuller 분포라고 한다. 이 분포는 랜덤워크로 얻은 순열을 AR(1) 적합할 때 <span class="math inline">\(\theta\)</span>의 추정값이다. Y는 <span class="math inline">\(\rho = 1\)</span> 혹은 <span class="math inline">\(\theta = 0\)</span>으로 설정하여 얻은 순열로 왼쪽 꼬리 부분이 적합이 잘되어 <span class="math inline">\(\rho &lt; 1\)</span>에 해당된다고 볼 수 있다. <span class="math inline">\(H_0\)</span> 가설에서도 왼쪽 꼬리는 우연히 발생할 수 있지만 그 정도는 기각하고 <span class="math inline">\(H_1: \rho &lt; 1\)</span>을 받아들이게 된다. 다른 검정과 마찬가지로 <span class="math inline">\(H_0\)</span>을 기각하지 못하더라도 <span class="math inline">\(\rho = 1\)</span>이 되는 것은 아니니 주의하자. 임곗값은 다음과 같다.</p>
+<pre class="r"><code>quantile(t_df$statistic, c(1, 2.5, 5, 10) * 0.01)</code></pre>
+<pre><code>##        1%      2.5%        5%       10% 
+## -3.501354 -3.221755 -2.961572 -2.651377</code></pre>
+</div>
+<div id="engle-granger-공적분-검정" class="section level2">
+<h2>Engle-Granger 공적분 검정</h2>
+<p>DF 단위근 검정이 랜덤워크에 대한 분포에서 임곗값을 얻었다면, Engle-Granger 공적분 검정은 서로 상관이 없는 램덤워크가 서로 관련이 있는 것처럼 보이게 되는 허구적 회귀(spurious regression)에서 분포를 얻는 것이다. 앞서 DF 검정을 직접 lm 함수를 사용하여 수행했다면 여기서는 urca 패키지의 ur.df함수를 이용하겠다. 인수를 lags = 0으로 설정하여 기본적인 DF 검정을 수행하겠다.</p>
+<pre class="r"><code>dgp_spurious &lt;- function(n) {
+  df &lt;- tibble(
+    EpX = rnorm(n),
+    EpY = rnorm(n)
+  ) %&gt;% mutate(
+    X = cumsum(EpX),
+    Y = cumsum(EpY)
+  )
+  lm_mod &lt;- lm(Y ~ X, data = df)
+  df &lt;- df %&gt;%
+    add_residuals(lm_mod, var = &quot;U&quot;)
+  statistic &lt;- ur.df(df$U, &quot;drift&quot;, lags = 0L)  # DF
+  statistic@teststat[[1]]
+}</code></pre>
+<pre class="r"><code>t_eg &lt;- tibble(statistic = rep(100, 1000) %&gt;% map_dbl(dgp_spurious))
+t_eg %&gt;%
+  ggplot(aes(statistic)) +
+  geom_density()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>quantile(t_eg$statistic, c(1, 2.5, 5, 10) * 0.01)</code></pre>
+<pre><code>##        1%      2.5%        5%       10% 
+## -3.970517 -3.583617 -3.326346 -3.031081</code></pre>
+<p>이 분포와 임곗값을 얻는 방법을 이해했다면 시계열 분석을 더 잘 다룰 수 있을 것이다.</p>
+</div>
 </div>

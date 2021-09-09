@@ -13,11 +13,9 @@
       <pubDate>Wed, 08 Sep 2021 00:00:00 +0000</pubDate>
       
       <guid>https://danhojin.github.io/r-blog/2021/09/08/%EB%8B%A8%EC%9C%84%EA%B7%BC-%EA%B3%B5%EC%A0%81%EB%B6%84/</guid>
-      <description>Dickey-Fuller 단위근 검정 순열 \(\{ e_t \}\)가 독립동일분포(iid)일 때 AR(1) 모델을 생각해보자.
+      <description>단위근 검정과 공적분 검정 시계열 데이터를 적당한 방법으로 적합한 후에는 잔차가 어떤 구조를 가지고 있는지 살펴봐야 한다. 제 1 조건으로 잔차가 터지지 말아야 한다는 것이다. 다음 AR(1) 모델을 살펴보자.
 \(y_t = \alpha + \rho y_{t-1} + e_t\)
-영가설은 순열 \(\{ y_t \}\)가 단위 근을 가졌다는 것이다. \(H_0: \rho = 1\) 우리의 관심은 \(H_1: \rho &amp;lt; 1\)에 있다. 위 식의 양변에 \(y_{t - 1}\)을 빼고 새로운 파라미터 \(\theta = \rho - 1\)을 도입하면,
-\(\Delta y_t = \alpha + \theta y_{t-1} + e_t\)
-식으로 변경된다. 가설은 각각 \(H_0: \theta = 0\)과 \(H_1: \theta &amp;lt; 0\)이 된다.</description>
+패키지 불러오기 library(tidyverse) library(tidymodels) library(modelr) library(urca) # library(egcm) dgp_ar1 &amp;lt;- function(n, rho) { eps &amp;lt;- rnorm(n) y &amp;lt;- vector(&amp;quot;numeric&amp;quot;, n) for(k in 2:n) { y[k] &amp;lt;- rho * y[k - 1] + eps[k] } y } set.</description>
     </item>
     
   </channel>
