@@ -6,7 +6,18 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Wed, 08 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>주가 차트 Shiny 앱</title>
+      <link>https://danhojin.github.io/r-blog/2021/09/15/%EC%A3%BC%EA%B0%80-%EC%B0%A8%ED%8A%B8-shiny-%EC%95%B1/</link>
+      <pubDate>Wed, 15 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2021/09/15/%EC%A3%BC%EA%B0%80-%EC%B0%A8%ED%8A%B8-shiny-%EC%95%B1/</guid>
+      <description>주가 차트 Shiny 앱 종목을 선택하면 주가 일봉 차트가 도시되는 앱을 개발하였다. rstudio의 Use reactive expressions 튜토리얼을 참고하였으며, 앱의 서비스 모습은 다음과 같다.
+shiny 앱의 기본 구조는 ui와 server 함수를 작성하여 shinyApp 함수에 인수로 제공하면 된다. ui 함수에는 사용자와 상호 작용을 위한 Input으로 끝나는 위젯이나 보여주고자 하는 사항을 담은 Output 위젯이 있다. server 함수 내 render로 시작하는 함수는 Input과 Output 변수에 접근하여 반응형 앱이 되도록 한다.
+앱은 rstudio 환경에서 실행하거나 프로젝트 루트에서 R -e &amp;ldquo;shiny::runApp()&amp;rdquo; 명령어를 이용하여 실행할 수 있다.</description>
+    </item>
+    
     <item>
       <title>DF 단위근 검정 및 EG 공적분 검정</title>
       <link>https://danhojin.github.io/r-blog/2021/09/08/%EB%8B%A8%EC%9C%84%EA%B7%BC-%EA%B3%B5%EC%A0%81%EB%B6%84/</link>
