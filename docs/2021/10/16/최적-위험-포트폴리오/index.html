@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<title>최적 위험 포트폴리오 - A Hugo website</title>
+<meta property="og:title" content="최적 위험 포트폴리오 - A Hugo website">
+
+
+  <link href='https://danhojin.github.io/r-blog/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/r-blog/css/fonts.css" media="all">
+<link rel="stylesheet" href="/r-blog/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/r-blog/" class="nav-logo">
+    <img src="/r-blog/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/r-blog/about/">About</a></li>
+    
+    <li><a href="https://github.com/danhojin">GitHub</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">6 min read</span>
+    
+
+    <h1 class="article-title">최적 위험 포트폴리오</h1>
+
+    
+    <span class="article-date">2021-10-16</span>
+    
+
+    <div class="article-content">
+      
+<script src="https://danhojin.github.io/r-blog/2021/10/16/%EC%B5%9C%EC%A0%81-%EC%9C%84%ED%97%98-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="최적-위험-포트폴리오" class="section level1">
+<h1>최적 위험 포트폴리오</h1>
+<p>여러 위험 자산으로 기회집단을 구성할 수 있다. 각각의 자산에 대하여 과거 기록으로부터 위험과 기회 수익률을 얻을 수 있다고 하자. 자산의 가중치를 결정하여 포트폴리오를 만들 수 있다. 이때 공매도나 레버리지 허용 여부에 따라 제약 조건을 부여해야 한다. 가용 지역(feasible region)에서 성립되는 포트폴리오를 모으면 좌상단에 포락선을 얻을 수 있으며 이를 효율적 프론티어(efficient frontier) 혹은 효율적 투자기회선이라고 한다. 이 프론티어와 무위험 자산을 절편으로하는 접선을 자본 배분선(CAL, capital allocation line)이라고 한다. 이는 샤프 비율이 최대가 되는 선이다.</p>
+<p>과거 기록으로부터 얻은 수익률은 별로 믿을 수 없다는 점을 주의해야 한다. 그래서 수익률 정보는 버리고 비교적 믿을 수 있는 위험만을 가지고 배분 적략을 취할 수도 있다. 그럼에도 마코위츠(Markowitz)가 개발한 효율적 프론티어 유도 기법은 다른 배분 전략 전개에 기본이 되므로 수행해 볼 가치가 있다.</p>
+<p>입력 자료는 기본 투자론[1] 예제를 사용하겠다. 여러 국가 지수의 과거 기록에서 추출한 것으로 위험 자산을 여러 나라에 분산하고자 한다.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.5     ✓ dplyr   1.0.7
+## ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+## ✓ readr   2.0.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>## Returns and Risks
+risk_return &lt;- tibble(
+  Symbol = c(&quot;US&quot;, &quot;EN&quot;, &quot;FR&quot;, &quot;GE&quot;, &quot;JP&quot;, &quot;CN&quot;),
+  Mean = c(0.06, 0.053, 0.068, 0.08, 0.045, 0.073),
+  Sd = c(0.1495, 0.1493, 0.2008, 0.2270, 0.1878, 0.3004)
+)
+print(risk_return)</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   Symbol  Mean    Sd
+##   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 US     0.06  0.150
+## 2 EN     0.053 0.149
+## 3 FR     0.068 0.201
+## 4 GE     0.08  0.227
+## 5 JP     0.045 0.188
+## 6 CN     0.073 0.300</code></pre>
+<p>이차계획법(quadratic programming)에 사용할 공분산 행렬은 다음과 같이 상관계수 행렬로부터 구한다.</p>
+<pre class="r"><code>## Covariance
+cor_matrix &lt;- tibble(
+  Symbol = c(&quot;US&quot;, &quot;EN&quot;, &quot;FR&quot;, &quot;GE&quot;, &quot;JP&quot;, &quot;CN&quot;),
+  US = c(1, 0.83, 0.83, 0.85, 0.43, 0.16),
+  EN = c(0.83, 1, 0.92, 0.88, 0.44, 0.28),
+  FR = c(0.83, 0.92, 1, 0.96, 0.47, 0.26),
+  GE = c(0.85, 0.88, 0.96, 1, 0.43, 0.29),
+  JP = c(0.43, 0.44, 0.47, 0.43, 1, 0.14),
+  CN = c(0.16, 0.28, 0.26, 0.29, 0.14, 1)
+)
+cor_matrix &lt;- cor_matrix %&gt;%
+  select(-Symbol) %&gt;%
+  as.matrix()
+rownames(cor_matrix) &lt;- risk_return$Symbol
+print(cor_matrix)</code></pre>
+<pre><code>##      US   EN   FR   GE   JP   CN
+## US 1.00 0.83 0.83 0.85 0.43 0.16
+## EN 0.83 1.00 0.92 0.88 0.44 0.28
+## FR 0.83 0.92 1.00 0.96 0.47 0.26
+## GE 0.85 0.88 0.96 1.00 0.43 0.29
+## JP 0.43 0.44 0.47 0.43 1.00 0.14
+## CN 0.16 0.28 0.26 0.29 0.14 1.00</code></pre>
+<pre class="r"><code>risk_matrix &lt;- as.matrix(risk_return$Sd)
+risk_matrix &lt;- risk_matrix %*% t(risk_matrix)
+cov_matrix &lt;- cor_matrix * risk_matrix
+cov_matrix</code></pre>
+<pre><code>##             US         EN         FR         GE          JP          CN
+## US 0.022350250 0.01852589 0.02491627 0.02884603 0.012072723 0.007185568
+## EN 0.018525890 0.02229049 0.02758108 0.02982417 0.012336958 0.012557922
+## FR 0.024916268 0.02758108 0.04032064 0.04375834 0.017723813 0.015683283
+## GE 0.028846025 0.02982417 0.04375834 0.05152900 0.018331158 0.019775332
+## JP 0.012072723 0.01233696 0.01772381 0.01833116 0.035268840 0.007898117
+## CN 0.007185568 0.01255792 0.01568328 0.01977533 0.007898117 0.090240160</code></pre>
+<div id="최소-분산-포트폴리오-minimum-variance-portfolio" class="section level2">
+<h2>최소 분산 포트폴리오 (Minimum variance portfolio)</h2>
+<p>위험-수익 하한선을 얻기 위하여 최소 분산 포트폴리오 구한다. ROI 패키지는 R에 구현되어 있는 여려 최적화 기법을 일관된 방법으로 접근할 수 있도록 해 준다. 코드 자체가 주석이 될 정도로 가독성이 높다.</p>
+<pre class="r"><code>library(ROI)  # ROI: An Extensible R Optimization Infrastructure</code></pre>
+<pre><code>## ROI: R Optimization Infrastructure</code></pre>
+<pre><code>## Registered solver plugins: nlminb, glpk, quadprog.</code></pre>
+<pre><code>## Default solver: auto.</code></pre>
+<pre class="r"><code>qp &lt;- OP()
+objective(qp) &lt;- Q_objective(Q = cov_matrix * 2)
+constraints(qp) &lt;- L_constraint(L = matrix(rep(1, 6), nrow = 1),
+                                dir = c(&quot;==&quot;),
+                                rhs = 1)
+bounds(qp) &lt;- V_bound(lb = rep(0, 6))
+qp</code></pre>
+<pre><code>## ROI Optimization Problem:
+## 
+## Minimize a quadratic objective function of length 6 with
+## - 6 continuous objective variables,
+## 
+## subject to
+## - 1 constraint of type linear.
+## - 0 lower and 0 upper non-standard variable bounds.</code></pre>
+<pre class="r"><code>qp_sol &lt;- ROI_solve(qp, solver = &quot;quadprog&quot;)
+qp_sol$objval</code></pre>
+<pre><code>## [1] 0.01733258</code></pre>
+<pre class="r"><code>qp_sol$solution</code></pre>
+<pre><code>## [1] 4.061850e-01 2.470240e-01 0.000000e+00 2.586554e-18 2.426789e-01
+## [6] 1.041121e-01</code></pre>
+<pre class="r"><code>mvp_return &lt;- sum(qp_sol$solution * risk_return$Mean)
+mvp_return</code></pre>
+<pre><code>## [1] 0.05598411</code></pre>
+<p>최소 분산 포트폴리오 해로부터 수익 하한을 얻었다.</p>
+</div>
+<div id="효율적-프론티어-efficient-frontier" class="section level2">
+<h2>효율적 프론티어 (Efficient frontier)</h2>
+<p>이차계획법을 사용하기 위하여 주어진 수익률에서 최소 분산을 얻는 문제로 구성하였다.</p>
+<pre class="r"><code>min_return &lt;- function(r) {
+  qp &lt;- OP()
+  objective(qp) &lt;- Q_objective(Q = cov_matrix * 2)
+  constraints(qp) &lt;- L_constraint(
+    L = matrix(c(rep(1, 6), risk_return$Mean), nrow = 2, byrow = 6),
+    dir = c(&quot;==&quot;, &quot;==&quot;),
+    rhs = c(1, r))
+  bounds(qp) &lt;- V_bound(lb = rep(0, 6))
+  qp_sol &lt;- ROI_solve(qp, solver = &quot;quadprog&quot;)
+  list(Sd = sqrt(qp_sol$objval),
+       W = qp_sol$solution)
+}
+
+length_out &lt;- 20
+ef &lt;- tibble(
+  Mean = seq(mvp_return, 0.075, length.out = length_out)
+)
+
+return_w &lt;- ef %&gt;%
+  pull(Mean) %&gt;%
+  map(min_return)
+
+ef &lt;- ef %&gt;%
+  mutate(Sd = map_dbl(return_w, ~ .x$Sd))
+
+w &lt;- map(return_w, ~ .x$W) %&gt;%
+  set_names(map_chr(1:length_out, ~ paste0(&quot;D&quot;, .x))) %&gt;%
+  bind_cols() %&gt;%
+  mutate(W = risk_return$Symbol) %&gt;%
+  pivot_longer(cols = -W) %&gt;%
+  pivot_wider(names_from = W, values_from = value) %&gt;%
+  select(-name)
+
+ef &lt;- bind_cols(ef, w)
+ef &lt;- ef %&gt;%
+  mutate(SharpeRatio = Mean / Sd) %&gt;%
+  relocate(SharpeRatio, .after = Sd)
+print(ef)</code></pre>
+<pre><code>## # A tibble: 20 × 9
+##      Mean    Sd SharpeRatio    US        EN        FR       GE        JP    CN
+##     &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1 0.0560 0.132       0.425 0.406  2.47e- 1  0        2.59e-18  2.43e- 1 0.104
+##  2 0.0570 0.132       0.432 0.475  1.86e- 1  4.73e-18 7.18e-18  2.18e- 1 0.120
+##  3 0.0580 0.133       0.437 0.544  1.25e- 1  9.47e-18 1.18e-17  1.94e- 1 0.137
+##  4 0.0590 0.134       0.441 0.613  6.44e- 2  1.42e-17 1.64e-17  1.70e- 1 0.153
+##  5 0.0600 0.135       0.444 0.682  3.54e- 3  1.89e-17 2.09e-17  1.46e- 1 0.169
+##  6 0.0610 0.137       0.444 0.716  0         1.74e-17 3.04e-17  9.66e- 2 0.188
+##  7 0.0620 0.140       0.443 0.720  0         9.97e-18 1.74e- 2  6.31e- 2 0.199
+##  8 0.0630 0.143       0.441 0.695  0        -3.49e-18 5.41e- 2  4.84e- 2 0.203
+##  9 0.0640 0.146       0.438 0.670  0        -1.70e-17 9.09e- 2  3.36e- 2 0.206
+## 10 0.0650 0.149       0.436 0.644 -5.32e-17 -8.41e-17 1.28e- 1  1.89e- 2 0.209
+## 11 0.0660 0.153       0.433 0.619 -8.72e-17 -9.62e-17 1.64e- 1  4.11e- 3 0.213
+## 12 0.0670 0.156       0.429 0.575 -1.10e-16 -1.09e-16 2.10e- 1  0        0.216
+## 13 0.0680 0.160       0.426 0.524 -1.34e-16 -1.22e-16 2.58e- 1  0        0.218
+## 14 0.0690 0.164       0.422 0.473 -1.59e-16 -1.36e-16 3.07e- 1  0        0.220
+## 15 0.0700 0.168       0.418 0.422 -1.83e-16 -1.49e-16 3.55e- 1  0        0.222
+## 16 0.0710 0.172       0.413 0.372 -2.21e-16 -1.62e-16 4.04e- 1  0        0.225
+## 17 0.0720 0.176       0.409 0.321 -2.31e-16 -1.48e-16 4.52e- 1  0        0.227
+## 18 0.0730 0.180       0.405 0.270 -2.69e-16 -2.16e-16 5.01e- 1 -1.39e-17 0.229
+## 19 0.0740 0.185       0.400 0.219 -2.66e-16 -2.02e-16 5.49e- 1  1.39e-17 0.231
+## 20 0.075  0.189       0.396 0.168  7.37e-17 -2.15e-16 5.98e- 1  0        0.234</code></pre>
+<p>샤프비율은 무위험 자산의 수익률을 0으로 가정하여 구하였다. 최대 샤프비율에서 자산 구성은 US에 71%, JP에 10%, CN에 19% 비율로 투자하는 것이다. 이 포트폴리오의 기대 수익은 6.1%, 위험은 0.14이다.</p>
+<pre class="r"><code>print(ef %&gt;% filter(SharpeRatio &gt; 0.444))</code></pre>
+<pre><code>## # A tibble: 1 × 9
+##     Mean    Sd SharpeRatio    US    EN       FR       GE     JP    CN
+##    &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 0.0610 0.137       0.444 0.716     0 1.74e-17 3.04e-17 0.0966 0.188</code></pre>
+<p>그림으로 요약해 보면 다음과 같다.</p>
+<pre class="r"><code>ef %&gt;%
+  ggplot(aes(Sd, Mean)) +
+  geom_line() +
+  geom_point() +
+  annotate(&quot;text&quot;, x = 0.1, y = 0.06, label = &quot;Efficient Frontier&quot;) +
+  geom_abline(slope = max(ef$SharpeRatio), intercept = 0) +
+  annotate(&quot;text&quot;, x = 0.1, y = 0.02, label = &quot;Capital Allocation Line&quot;) +
+  geom_point(aes(x = Sd, y = Mean, label = Symbol), data = risk_return) +
+  geom_text(aes(x = Sd, y = Mean, label = Symbol), data = risk_return, vjust = 2) +
+  xlim(0, 0.31) +
+  ylim(0, 0.08)</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: label</code></pre>
+<p><img src="https://danhojin.github.io/r-blog/2021/10/16/%EC%B5%9C%EC%A0%81-%EC%9C%84%ED%97%98-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="참고" class="section level2">
+<h2>참고</h2>
+<ol style="list-style-type: decimal">
+<li>Zvi Bodie, Alex Kane, Alan J., 남상구·최승두 공역, Marcus, Bodie의 기본투자론, 10판, 2쇄, 맥그로힐에듀케이션코리아, 2019</li>
+<li>김병규, 이현열, 감정을 이기는 퀀트투자, 스마트베타, 워터베어프레스, 2017</li>
+</ol>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/r-blog/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/r-blog/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/r-blog/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

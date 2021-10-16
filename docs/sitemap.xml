@@ -3,15 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://danhojin.github.io/r-blog/</loc>
-    <lastmod>2021-09-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/cal/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/capital-allocation-line/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/efficient-frontier/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/markowitz/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/optimal-risky-portfolio/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danhojin.github.io/r-blog/post/</loc>
-    <lastmod>2021-09-15T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://danhojin.github.io/r-blog/tags/shiny-app/</loc>
-    <lastmod>2021-09-15T00:00:00+00:00</lastmod>
+    <loc>https://danhojin.github.io/r-blog/tags/sharpe-ratio/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danhojin.github.io/r-blog/tags/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/2021/10/16/%EC%B5%9C%EC%A0%81-%EC%9C%84%ED%97%98-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4/</loc>
+    <lastmod>2021-10-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://danhojin.github.io/r-blog/tags/shiny-app/</loc>
     <lastmod>2021-09-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://danhojin.github.io/r-blog/2021/09/15/%EC%A3%BC%EA%B0%80-%EC%B0%A8%ED%8A%B8-shiny-%EC%95%B1/</loc>

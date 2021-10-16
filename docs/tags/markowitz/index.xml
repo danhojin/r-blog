@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markowitz on A Hugo website</title>
+    <link>https://danhojin.github.io/r-blog/tags/markowitz/</link>
+    <description>Recent content in Markowitz on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-KR</language>
+    <lastBuildDate>Sat, 16 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/markowitz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>최적 위험 포트폴리오</title>
+      <link>https://danhojin.github.io/r-blog/2021/10/16/%EC%B5%9C%EC%A0%81-%EC%9C%84%ED%97%98-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/2021/10/16/%EC%B5%9C%EC%A0%81-%EC%9C%84%ED%97%98-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4/</guid>
+      <description>최적 위험 포트폴리오 여러 위험 자산으로 기회집단을 구성할 수 있다. 각각의 자산에 대하여 과거 기록으로부터 위험과 기회 수익률을 얻을 수 있다고 하자. 자산의 가중치를 결정하여 포트폴리오를 만들 수 있다. 이때 공매도나 레버리지 허용 여부에 따라 제약 조건을 부여해야 한다. 가용 지역(feasible region)에서 성립되는 포트폴리오를 모으면 좌상단에 포락선을 얻을 수 있으며 이를 효율적 프론티어(efficient frontier) 혹은 효율적 투자기회선이라고 한다. 이 프론티어와 무위험 자산을 절편으로하는 접선을 자본 배분선(CAL, capital allocation line)이라고 한다.</description>
+    </item>
+    
+  </channel>
+</rss>

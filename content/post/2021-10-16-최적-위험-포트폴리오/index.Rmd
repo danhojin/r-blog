@@ -1,0 +1,173 @@
+---
+title: 최적 위험 포트폴리오
+author: 단호진
+date: '2021-10-16'
+slug: 최적-위험-포트폴리오
+categories: []
+tags:
+  - Markowitz
+  - optimal risky portfolio
+  - CAL
+  - capital allocation line
+  - Sharpe ratio
+  - efficient frontier
+---
+
+
+# 최적 위험 포트폴리오
+
+여러 위험 자산으로 기회집단을 구성할 수 있다. 각각의 자산에 대하여 과거 기록으로부터 위험과 기회 수익률을 얻을 수 있다고 하자. 자산의 가중치를 결정하여 포트폴리오를 만들 수 있다. 이때 공매도나 레버리지 허용 여부에 따라 제약 조건을 부여해야 한다. 가용 지역(feasible region)에서 성립되는 포트폴리오를 모으면 좌상단에 포락선을 얻을 수 있으며 이를 효율적 프론티어(efficient frontier) 혹은 효율적 투자기회선이라고 한다. 이 프론티어와 무위험 자산을 절편으로하는 접선을 자본 배분선(CAL, capital allocation line)이라고 한다. 이는 샤프 비율이 최대가 되는 선이다. 
+
+과거 기록으로부터 얻은 수익률은 별로 믿을 수 없다는 점을 주의해야 한다. 그래서 수익률 정보는 버리고 비교적 믿을 수 있는 위험만을 가지고 배분 적략을 취할 수도 있다. 그럼에도 마코위츠(Markowitz)가 개발한 효율적 프론티어 유도 기법은 다른 배분 전략 전개에 기본이 되므로 수행해 볼 가치가 있다. 
+
+입력 자료는 기본 투자론[1] 예제를 사용하겠다. 여러 국가 지수의 과거 기록에서 추출한 것으로 위험 자산을 여러 나라에 분산하고자 한다.
+
+```{r}
+library(tidyverse)
+
+## Returns and Risks
+risk_return <- tibble(
+  Symbol = c("US", "EN", "FR", "GE", "JP", "CN"),
+  Mean = c(0.06, 0.053, 0.068, 0.08, 0.045, 0.073),
+  Sd = c(0.1495, 0.1493, 0.2008, 0.2270, 0.1878, 0.3004)
+)
+print(risk_return)
+```
+
+이차계획법(quadratic programming)에 사용할 공분산 행렬은 다음과 같이 상관계수 행렬로부터 구한다.
+
+
+```{r}
+## Covariance
+cor_matrix <- tibble(
+  Symbol = c("US", "EN", "FR", "GE", "JP", "CN"),
+  US = c(1, 0.83, 0.83, 0.85, 0.43, 0.16),
+  EN = c(0.83, 1, 0.92, 0.88, 0.44, 0.28),
+  FR = c(0.83, 0.92, 1, 0.96, 0.47, 0.26),
+  GE = c(0.85, 0.88, 0.96, 1, 0.43, 0.29),
+  JP = c(0.43, 0.44, 0.47, 0.43, 1, 0.14),
+  CN = c(0.16, 0.28, 0.26, 0.29, 0.14, 1)
+)
+cor_matrix <- cor_matrix %>%
+  select(-Symbol) %>%
+  as.matrix()
+rownames(cor_matrix) <- risk_return$Symbol
+print(cor_matrix)
+```
+
+```{r}
+risk_matrix <- as.matrix(risk_return$Sd)
+risk_matrix <- risk_matrix %*% t(risk_matrix)
+cov_matrix <- cor_matrix * risk_matrix
+cov_matrix
+```
+
+
+## 최소 분산 포트폴리오 (Minimum variance portfolio)
+
+위험-수익 하한선을 얻기 위하여 최소 분산 포트폴리오 구한다. ROI 패키지는 R에 구현되어 있는 여려 최적화 기법을 일관된 방법으로 접근할 수 있도록 해 준다. 코드 자체가 주석이 될 정도로 가독성이 높다.
+
+
+```{r}
+library(ROI)  # ROI: An Extensible R Optimization Infrastructure
+
+
+qp <- OP()
+objective(qp) <- Q_objective(Q = cov_matrix * 2)
+constraints(qp) <- L_constraint(L = matrix(rep(1, 6), nrow = 1),
+                                dir = c("=="),
+                                rhs = 1)
+bounds(qp) <- V_bound(lb = rep(0, 6))
+qp
+```
+
+```{r}
+qp_sol <- ROI_solve(qp, solver = "quadprog")
+qp_sol$objval
+```
+
+```{r}
+qp_sol$solution
+```
+
+```{r}
+mvp_return <- sum(qp_sol$solution * risk_return$Mean)
+mvp_return
+```
+
+최소 분산 포트폴리오 해로부터 수익 하한을 얻었다.
+
+
+## 효율적 프론티어 (Efficient frontier)
+
+이차계획법을 사용하기 위하여 주어진 수익률에서 최소 분산을 얻는 문제로 구성하였다.
+
+```{r}
+min_return <- function(r) {
+  qp <- OP()
+  objective(qp) <- Q_objective(Q = cov_matrix * 2)
+  constraints(qp) <- L_constraint(
+    L = matrix(c(rep(1, 6), risk_return$Mean), nrow = 2, byrow = 6),
+    dir = c("==", "=="),
+    rhs = c(1, r))
+  bounds(qp) <- V_bound(lb = rep(0, 6))
+  qp_sol <- ROI_solve(qp, solver = "quadprog")
+  list(Sd = sqrt(qp_sol$objval),
+       W = qp_sol$solution)
+}
+
+length_out <- 20
+ef <- tibble(
+  Mean = seq(mvp_return, 0.075, length.out = length_out)
+)
+
+return_w <- ef %>%
+  pull(Mean) %>%
+  map(min_return)
+
+ef <- ef %>%
+  mutate(Sd = map_dbl(return_w, ~ .x$Sd))
+
+w <- map(return_w, ~ .x$W) %>%
+  set_names(map_chr(1:length_out, ~ paste0("D", .x))) %>%
+  bind_cols() %>%
+  mutate(W = risk_return$Symbol) %>%
+  pivot_longer(cols = -W) %>%
+  pivot_wider(names_from = W, values_from = value) %>%
+  select(-name)
+
+ef <- bind_cols(ef, w)
+ef <- ef %>%
+  mutate(SharpeRatio = Mean / Sd) %>%
+  relocate(SharpeRatio, .after = Sd)
+print(ef)
+```
+
+샤프비율은 무위험 자산의 수익률을 0으로 가정하여 구하였다. 최대 샤프비율에서 자산 구성은 US에 71%, JP에 10%, CN에 19% 비율로 투자하는 것이다. 이 포트폴리오의 기대 수익은 6.1%, 위험은 0.14이다.
+
+
+```{r}
+print(ef %>% filter(SharpeRatio > 0.444))
+```
+그림으로 요약해 보면 다음과 같다.
+
+```{r}
+ef %>%
+  ggplot(aes(Sd, Mean)) +
+  geom_line() +
+  geom_point() +
+  annotate("text", x = 0.1, y = 0.06, label = "Efficient Frontier") +
+  geom_abline(slope = max(ef$SharpeRatio), intercept = 0) +
+  annotate("text", x = 0.1, y = 0.02, label = "Capital Allocation Line") +
+  geom_point(aes(x = Sd, y = Mean, label = Symbol), data = risk_return) +
+  geom_text(aes(x = Sd, y = Mean, label = Symbol), data = risk_return, vjust = 2) +
+  xlim(0, 0.31) +
+  ylim(0, 0.08)
+```
+
+
+
+## 참고
+
+1. Zvi Bodie, Alex Kane, Alan J., 남상구·최승두 공역, Marcus, Bodie의 기본투자론, 10판, 2쇄, 맥그로힐에듀케이션코리아, 2019
+2. 김병규, 이현열, 감정을 이기는 퀀트투자, 스마트베타, 워터베어프레스, 2017

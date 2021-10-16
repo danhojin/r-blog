@@ -6,7 +6,61 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-KR</language>
-    <lastBuildDate>Wed, 15 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://danhojin.github.io/r-blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CAL</title>
+      <link>https://danhojin.github.io/r-blog/tags/cal/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/cal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>capital allocation line</title>
+      <link>https://danhojin.github.io/r-blog/tags/capital-allocation-line/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/capital-allocation-line/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>efficient frontier</title>
+      <link>https://danhojin.github.io/r-blog/tags/efficient-frontier/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/efficient-frontier/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Markowitz</title>
+      <link>https://danhojin.github.io/r-blog/tags/markowitz/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/markowitz/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>optimal risky portfolio</title>
+      <link>https://danhojin.github.io/r-blog/tags/optimal-risky-portfolio/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/optimal-risky-portfolio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sharpe ratio</title>
+      <link>https://danhojin.github.io/r-blog/tags/sharpe-ratio/</link>
+      <pubDate>Sat, 16 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://danhojin.github.io/r-blog/tags/sharpe-ratio/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>shiny app</title>
       <link>https://danhojin.github.io/r-blog/tags/shiny-app/</link>
